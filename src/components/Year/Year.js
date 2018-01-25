@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
-import Month from './components/Month/Month';
-import yearCreator from '../../year-creator';
+import Month from '../Month/Month';
+import YearCreator from '../../year-creator';
 
 class Year extends Component {
     render() {
+        let year = new YearCreator(2018)
         return (
             <div className="Year">
                 {
-                    this.state.year.months.map((month) => {
+                    year.months.map((month) => {
                         return (
                             <Month month={month} />
                         )
