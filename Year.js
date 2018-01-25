@@ -1,8 +1,43 @@
 
+const holiday = date => {
+    let month = date.getMonth()
+    let day = date.getDay()
+    date = date.getDate()
+    if (month === 0) {
+        if (date === 1) return "New Years"
+        if (day === 1 && (date > 14 && date < 22)) return "Martin Luther King Jr Day"
+    }
+    if (month === 1) {
+        if (day === 1 && (date > 14 && date < 22)) return "Presidents Day"
+    }
+    if (month === 1) {
+        if (day === 1 && (date > 24)) return "Memorial Day"
+    }
+    if (month === 6) {
+        if (date === 4) return "Independence Day"
+    }
+    if (month === 8) {
+        if (day === 1 && (date < 8)) return "Labor Day"
+    }
+    if (month === 9) {
+        if (day === 1 && (date > 7 && date < 15)) return "Columbus Day"
+    }
+    if (month === 10) {
+        if (date === 11) return "Veterans Day"
+        if (day === 4 && (date > 21 && date < 29)) return "Thanksgiving"
+    }
+    if (month === 11) {
+        if (date === 25) return "Christmas"
+    }
+    return false
+}
+
 class Day {
     constructor(date, week) {
         this.date = date.getDate()
         this.day = date.getDay()
+        this.month = date.getMonth()
+        this.holiday = holiday(date)
         switch (this.day) {
             case 0:
                 this.fullDay = 'Sunday'
@@ -27,7 +62,7 @@ class Day {
                 break;
         }
         this.owner = null
-        this.week = this.day === 6 ? week.number++ : week.number
+        this.week = this.day === 6 ? ++week.number : week.number
     }
 }
 
@@ -91,6 +126,9 @@ class Month {
             this.days.push(new Day(date, week))
         }
     }
+    getHolidays() {
+        return this.days.filter(day => day.holiday)
+    }
 }
 
 class Year {
@@ -98,13 +136,57 @@ class Year {
         this.year = year
         this.firstDay = new Date(year, 0, 1)
         this.firstDay = this.firstDay.getDay()
-        this.week = {
+        let week = {
             number: this.firstDay === 6 ? 1 : 0
         }
         this.months = []
         for (let i = 0; i < 12; i++) {
             let date = new Date(year, i, 1)
-            this.months.push(new Month(date, this.week))
+            this.months.push(new Month(date, week))
         }
+    }
+    getHolidays() {
+        let holidays = []
+        this.months.map(month => {
+            month.days.map(day => {
+                if (day.holiday) holidays.push(day)
+            })
+        })
+        return holidays
+    }
+    selectWeekForUser(user, week) {
+        this.months = this.months.map(month => {
+            month.days = month.days.map(day => {
+                if (day.week === week) day.owner = user
+                return day
+            })
+            return month
+        })
+    }
+    removeWeekFromUser(user, week) {
+        this.months = this.months.map(month => {
+            month.days = month.days.map(day => {
+                if (day.owner === user && day.week === week) day.owner = null
+                return day
+            })
+            return month
+        })
+    }
+    getDatesByUser(user) {
+        let dates = []
+        this.months.map(month => {
+            month.days.map(day => {
+                if (day.owner === user) dates.push(day)
+            })
+        })
+        return dates
+    }
+}
+
+class User {
+    constructor(name, id) {
+        this.name = name
+        this.id = id
+        this.weeks = []
     }
 }
