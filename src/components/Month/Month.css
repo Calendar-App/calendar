@@ -1,0 +1,9 @@
+
+.month {
+    display: flex;
+}
+
+.month-body {
+    display: flex;
+    flex-flow: row wrap;
+}
