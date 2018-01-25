@@ -183,10 +183,4 @@ class Year {
     }
 }
 
-class User {
-    constructor(name, id) {
-        this.name = name
-        this.id = id
-        this.weeks = []
-    }
-}
+export default Year
