@@ -51,13 +51,14 @@ class App extends Component {
   }
 
   selectWeek() {
-    this.state.years.months = this.months.map(month => {
-        month.days = month.days.map(day => {
-            if (day.week === week) day.owner = user
-            return day
-        })
-        return month
-    })
+    // this.state.years.months = this.months.map(month => {
+    //     month.days = month.days.map(day => {
+    //         if (day.week === week) day.owner = user
+    //         return day
+    //     })
+    //     return month
+    // })
+  }
 
   render() {
     return (
