@@ -25,7 +25,7 @@ class Month extends Component {
                             emptyDays.map((item, i) => {
                                 console.log(i)
                                 return (
-                                    <div className="day" style={{ height: '15px', margin: '5px', background: 'black'}} />
+                                    <div className="day" />
                                 )
                             })
                             :
