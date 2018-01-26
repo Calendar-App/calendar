@@ -19,7 +19,7 @@ class Day extends Component {
                 {this.props.day.date}
             </div>
             :
-            <div className="disabled_day" onClick={() => this.props.selectWeek(this.props.day.week)}>
+            <div className="disabled_day" onClick={() => this.props.selectWeek(this.props.day.week)} style={{'background':this.props.color}}>
                 {this.props.day.date}
             </div>
 

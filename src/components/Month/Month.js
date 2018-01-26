@@ -44,7 +44,9 @@ class Month extends Component {
                     {
                         month.days.map((day) => {
                             return (
-                                <Day key={`${month.year}${month.month}${day.date}`} day={day} selectWeek={this.props.selectWeek} />
+                                <Day key={`${month.year}${month.month}${day.date}`} day={day} 
+                                selectWeek={this.props.selectWeek} color={this.props.color}
+                                />
                             )
                         })
                     }
