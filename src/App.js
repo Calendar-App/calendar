@@ -18,7 +18,10 @@ class App extends Component {
       user: {
         id: 123
       },
-      color: 'grey',
+      users: [{
+        id: 0
+      }],
+      color: '#f44336',
       modal: false,
       modalFunction: () => { },
       selectedWeek: -1
@@ -121,7 +124,7 @@ class App extends Component {
       let year = this.state.year
       year.months = year.months.map(month => {
         month.days = month.days.map(day => {
-          if (day.week === week) day.owner = this.state.user.id
+          if (day.week === week) day.selected = true
           return day
         })
         return month
@@ -171,6 +174,7 @@ class App extends Component {
           selectWeek={this.selectWeek}
           hoverWeek={this.hoverWeek}
           color={this.state.color}
+          user={this.state.user}
         />
         {
           this.state.modal ?
