@@ -7,16 +7,13 @@ class Year extends Component {
         // let year = new YearCreator(2018)
         return (
             <div className="Year">
-                <div className="year-header">{this.props.year.year}</div>
-                <div className="year-body">
-                    {
-                        this.props.year.months.map((month) => {
-                            return (
-                                <Month month={month} />
-                            )
-                        })
-                    }
-                </div>
+                {
+                    this.props.year.months.map((month) => {
+                        return (
+                            <Month month={month} />
+                        )
+                    })
+                }
             </div>
         )
     }
