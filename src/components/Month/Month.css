@@ -8,9 +8,8 @@
 .month-header {
   background: #3cb4ff;
   color: white;
-  padding: 0.5rem;
-  display: flex;
-  justify-content: center; }
+  padding: 0.5rem 1rem;
+  display: flex; }
 
 .month-body {
   display: flex;
