@@ -1,7 +1,16 @@
 .day {
   width: 14.28%;
-  box-sizing: border-box;
-  text-align: center; }
+  text-align: center;
+  position: relative;
+  transition: background-color 0.1s; }
+
+.holiday {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.05); }
 
 .day div {
   padding: 0.75rem 0; }

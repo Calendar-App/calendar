@@ -81,6 +81,7 @@ class App extends Component {
   }
 
   hoverWeek = week => {
+    if (this.state.modal) return
     if (this.week === week) return // if we hover over another day in the same week
     else this.week = week
     let year = this.state.year
@@ -97,27 +98,29 @@ class App extends Component {
     })
   }
 
-  toggleModal = f => {
-    console.log(f)
+  toggleModal = cb => {
+    console.log(cb)
     this.setState({
       modal: !this.state.modal,
-      modalFunction: f.bind(this)
+      modalFunction: cb.bind(this)
     })
   }
 
   selectWeek = week => {
 
+    
     let weekArray = this.state.year.months.reduce((arr, month) => {
       month.days.map(day => {
         if (day.week === week) arr.push(day)
       })
       return arr
     }, [])
-
+    
     this.setState({
       selectedWeek: week,
       weekArray
     })
+    
     this.toggleModal(() => {
       console.log(week)
       console.log(weekArray)
@@ -133,6 +136,9 @@ class App extends Component {
         year
       })
     })
+
+    this.hoverWeek(week)
+
   }
 
   handleColorChange = (color, event) => {
