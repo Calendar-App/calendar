@@ -18,7 +18,7 @@ class App extends Component {
       user: {
         id: 123
       },
-      color: '#673ab7'
+      color: 'grey'
 
     }
   }
