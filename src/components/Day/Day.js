@@ -16,6 +16,7 @@ class Day extends Component {
     // selected days are the selected color
     // hover days are the selected color with opacity 50%
     // 
+    // holidays are always slightly darker
     // unavailable days are always unselectable
     // 
     // if user is admin
@@ -71,8 +72,11 @@ class Day extends Component {
             <div style={style} className={this.props.day.hover ? 'day hover' : 'day'} onMouseEnter={() => this.props.hoverWeek(this.props.day.week)} onClick={this.handleClick} >
                 {this.availability()}
                 {
-                    this.props.day.holiday ?
+                    this.props.day.holiday && !this.props.day.owner ?
                         <div className="holiday">
+                            <div style={{}} className="holiday-description">
+                                {this.props.day.holiday}
+                            </div>
                         </div>
                         :
                         null

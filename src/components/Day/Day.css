@@ -2,7 +2,7 @@
   width: 14.28%;
   text-align: center;
   position: relative;
-  transition: background-color 0.1s; }
+  overflow: visible; }
 
 .holiday {
   position: absolute;
@@ -10,7 +10,19 @@
   left: 0;
   bottom: 0;
   right: 0;
-  background: rgba(0, 0, 0, 0.05); }
+  background: rgba(0, 0, 0, 0.05);
+  overflow: visible; }
 
-.day div {
+.holiday-description {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 4; }
+
+.holiday:hover .holiday-description {
+  display: block; }
+
+.day > div {
   padding: 0.75rem 0; }
