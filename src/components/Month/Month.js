@@ -11,7 +11,6 @@ class Month extends Component {
         console.log(this.props)
         let { month } = this.props
         let emptyDays = month.days[0].day + 1
-        if (emptyDays === 7) emptyDays = 0
         console.log(emptyDays)
         for (let i = emptyDays; i; i--) {
             if (!Array.isArray(emptyDays)) emptyDays = []
@@ -21,19 +20,18 @@ class Month extends Component {
             <div className="Month">
                 <div className="month-header">{month.fullMonth}</div>
                 <div className='day-of-week'>
-                    <span>SUN</span>
-                    <span>MON</span>
-                    <span>TUE</span>
-                    <span>WED</span>
-                    <span>THU</span>
-                    <span>FRI</span>
-                    <span>SAT</span>
+                    <span>S</span>
+                    <span>M</span>
+                    <span>T</span>
+                    <span>W</span>
+                    <span>T</span>
+                    <span>F</span>
+                    <span>S</span>
                 </div>
                 <div className="month-body">
                     {
                         emptyDays.length ? 
                             emptyDays.map((item, i) => {
-                                console.log(i)
                                 return (
                                     <div className="day" />
                                 )

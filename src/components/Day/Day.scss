@@ -6,19 +6,20 @@
 .day {
     width: 14.28%;
     box-sizing: border-box;
-    text-align: center
+    text-align: center;
 }
 
 .day div {
     padding: 0.75rem 0;
 }
 
-.available_day {
-    background: white;
+.day:hover div {
+    background: rgba(60, 180, 255, 0.75);
+    color: white
 }
 
-.available_day:hover {
-    background: blue;
+.available_day {
+    background: white;
 }
 
 .disabled_day {
@@ -26,9 +27,5 @@
 }
 
 .holiday {
-    background: lightblue;
-}
-
-.holiday:hover {
-    background: blue;
+    background: rgba(60, 180, 255, 0.25);
 }

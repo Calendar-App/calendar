@@ -90,7 +90,7 @@ class App extends Component {
           }
           circleSize={28} // size of circles
           circleSpacing={14} // space between circles
-        />;
+        />
         {
           this.state.years.map(year => (
             <Year key={year} year={year} selectWeek={this.selectWeek} color={this.state.color}/>
