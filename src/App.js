@@ -3,8 +3,6 @@ import './App.css'
 
 import Year from './components/Year/Year';
 import YearCreator from './year-creator';
-import yearCreator from './year-creator';
-
 
 class App extends Component {
   constructor() {
@@ -14,51 +12,51 @@ class App extends Component {
         {
           months: []
         }
-      ]
+      ],
+      user: {
+        id: 123
+      }
 
     }
-
-    this.nextYear = this.nextYear.bind(this);
-    this.pervYear = this.pervYear.bind(this);
-    this.showMore = this.showMore.bind(this);
-    this.selectWeek = this.selectWeek.bind(this);
   }
 
-  componentDidMount() {
+  componentDidMount = () => {
     let years = [new YearCreator(2018)]
     this.setState({
       years
     })
   }
 
-  nextYear() {
+  nextYear = () => {
     this.setState({
       years: [new YearCreator(++this.state.years[0].year)]
     })
   }
-  pervYear() {
+  pervYear = () => {
     this.setState({
       years: [new YearCreator(--this.state.years[0].year)]
     })
   }
 
-  showMore() {
-    let years = this.state.years
-    years.push(new YearCreator(++this.state.years[0].year))
-    this.setState({
-      years
-    })
-    console.log(this.state)
-  }
+  // showMore() {
+  //   let years = this.state.years
+  //   years.push(new YearCreator(++this.state.years[0].year))
+  //   this.setState({
+  //     years
+  //   })
+  //   console.log(this.state)
+  // }
 
-  selectWeek() {
-    // this.state.years.months = this.months.map(month => {
-    //     month.days = month.days.map(day => {
-    //         if (day.week === week) day.owner = user
-    //         return day
-    //     })
-    //     return month
-    // })
+  selectWeek = week => {
+    let year = this.state.years[0]
+    year.months = year.months.map(month => {
+      month.days = month.days.map(day => {
+        if (day.week === week) day.owner = this.state.user.id
+        return day
+      })
+      return month
+    })
+    this.setState({ years: [year] })
   }
 
   render() {
@@ -73,8 +71,11 @@ class App extends Component {
             <i class="fa fa-arrow-right" aria-hidden="true"></i>
           </div>
         </div>
-        {this.state.years.map(year => <Year key={year} year={year} />)}
-        <div className='show-more' onClick={() => this.showMore()}>Show More?</div>
+        {
+          this.state.years.map(year => (
+            <Year key={year} year={year} selectWeek={this.selectWeek} />
+          ))
+        }
       </div>
     );
   }

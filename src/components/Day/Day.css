@@ -1,8 +1,10 @@
 .day {
   width: 14.28%;
-  padding: 0.75rem 0;
   box-sizing: border-box;
   text-align: center; }
+
+.day div {
+  padding: 0.75rem 0; }
 
 .disabled_day {
   background: gray; }

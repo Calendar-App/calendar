@@ -10,7 +10,7 @@ class Year extends Component {
                 {
                     this.props.year.months.map((month) => {
                         return (
-                            <Month month={month} />
+                            <Month month={month} selectWeek={this.props.selectWeek} />
                         )
                     })
                 }

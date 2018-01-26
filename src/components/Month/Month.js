@@ -8,6 +8,7 @@ class Month extends Component {
         super(props)
     }
     render() {
+        console.log(this.props)
         let { month } = this.props
         let emptyDays = month.days[0].day + 1
         if (emptyDays === 7) emptyDays = 0

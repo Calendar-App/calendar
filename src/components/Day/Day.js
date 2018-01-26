@@ -20,20 +20,21 @@ class Day extends Component {
     availability() {
         return (!this.props.day.owner) ?
 
-            <div className="available_day" onClick={ () => this.handleDayClick(this.props.day.week) }>
-                { this.props.day.date }
-            </div> 
+            <div className="available_day" onClick={() => this.props.selectWeek(this.props.day.week)}>
+                {this.props.day.date}
+            </div>
             :
-            <div className="disabled_day" onClick={ () => this.handleDayClick(this.props.day.week) }>
-                    { this.props.day.date }
+            <div className="disabled_day" onClick={() => this.props.selectWeek(this.props.day.week)}>
+                {this.props.day.date}
             </div>
 
     }
 
     render() {
+        // console.log(this.props)
         return (
             <div className='day'>
-                { this.availability() }
+                {this.availability()}
             </div>
         )
     }
