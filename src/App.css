@@ -20,3 +20,8 @@
 
 #prev-year {
   cursor: pointer; }
+
+div.circle-picker {
+  justify-content: center !important;
+  align-items: center !important;
+  width: 100vw !important; }
