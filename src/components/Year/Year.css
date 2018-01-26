@@ -1,0 +1,17 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto");
+.Year {
+  font-family: Roboto;
+  margin-top: 1rem; }
+
+.year-header {
+  background: #0050c8;
+  padding: 1.5rem;
+  text-align: center;
+  font-size: 2.5rem;
+  color: white;
+  margin-bottom: 1rem; }
+
+.year-body {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around; }

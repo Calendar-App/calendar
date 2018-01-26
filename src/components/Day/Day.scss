@@ -5,10 +5,13 @@
 
 .day {
     width: 14.28%;
+    padding: 0.5rem 0;
+    box-sizing: border-box;
+    text-align: center
 }
 
 .available_day {
-    background: white;
+    // background: white;
 }
 
 .disabled_day {
