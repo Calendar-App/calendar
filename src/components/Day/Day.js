@@ -20,12 +20,12 @@ class Day extends Component {
     availability() {
         return (!this.props.day.owner) ?
 
-        // only changing background of that specific day... need to make mouseOver change the entire week's background
-            <div className={ this.props.day.holiday ? "holiday" : "available_day"} onClick={() => this.props.selectWeek(this.props.day.week)} onMouseEnter={ () => this.handleMouseEnter(this.props.day.holiday)} >  
+            // only changing background of that specific day... need to make mouseOver change the entire week's background
+            <div className={this.props.day.holiday ? "holiday" : "available_day"} onClick={() => this.props.selectWeek(this.props.day.week)} >
                 {this.props.day.date}
             </div>
             :
-            <div className="disabled_day" onClick={() => this.props.selectWeek(this.props.day.week)} style={{'background':this.props.color}}>
+            <div className="disabled_day" onClick={() => this.props.selectWeek(this.props.day.week)} style={{ 'background': this.props.color }}>
                 {this.props.day.date}
             </div>
 
@@ -34,7 +34,7 @@ class Day extends Component {
     render() {
         // console.log(this.props)
         return (
-            <div className='day'>
+            <div className={this.props.day.hover ? 'day hover' : 'day'} onMouseEnter={() => this.props.hoverWeek(this.props.day.week)} >
                 {this.availability()}
             </div>
         )

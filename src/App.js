@@ -10,74 +10,90 @@ class App extends Component {
   constructor() {
     super()
     this.state = {
-      years: [
-        {
-          months: []
-        }
-      ],
+      year: {
+        months: []
+      },
       user: {
         id: 123
       },
       color: 'grey'
-
     }
   }
 
   componentDidMount = () => {
-    let years = [new YearCreator(2018)]
+    let year = new YearCreator(2018)
     this.setState({
-      years
+      year
     })
   }
 
   nextYear = () => {
+    let year = new YearCreator(++this.state.year.year)
     this.setState({
-      years: [new YearCreator(++this.state.years[0].year)]
-    })
-  }
-  pervYear = () => {
-    this.setState({
-      years: [new YearCreator(--this.state.years[0].year)]
+      year
     })
   }
 
-  // showMore() {
-  //   let years = this.state.years
-  //   years.push(new YearCreator(++this.state.years[0].year))
-  //   this.setState({
-  //     years
-  //   })
-  //   console.log(this.state)
-  // }
+  prevYear = () => {
+    let year = new YearCreator(--this.state.year.year)
+    this.setState({
+      year
+    })
+  }
 
-  selectWeek = week => {
-    let year = this.state.years[0]
+  hoverWeek = week => {
+    if (this.week === week) return // if we hover over another day in the same week
+    else this.week = week
+    let year = this.state.year
     year.months = year.months.map(month => {
       month.days = month.days.map(day => {
-        if (day.week === week) day.owner = this.state.user.id
+        if (day.week === week) day.hover = true
+        else day.hover = false
         return day
       })
       return month
     })
-    this.setState({ years: [year] })
+    this.setState({
+      year
+    })
+  }
+
+  toggleModal = f => {
+
+  }
+
+  selectWeek = week => {
+    this.toggleModal(() => {
+      let year = this.state.year
+      year.months = year.months.map(month => {
+        month.days = month.days.map(day => {
+          if (day.week === week) day.owner = this.state.user.id
+          return day
+        })
+        return month
+      })
+      this.setState({
+        year
+      })
+    })
   }
 
   handleColorChange = (color, event) => {
-    this.setState({ color: color.hex });
-    console.log(this.state.color)
-    
-  };
+    this.setState({
+      color: color.hex
+    })
+  }
 
   render() {
     return (
       <div className="App">
         <div className='calendar-header'>
-          <div id='prev-year' onClick={() => this.pervYear()}>
-            <i class="fa fa-arrow-left" aria-hidden="true"></i>
+          <div id='prev-year' onClick={() => this.prevYear()}>
+            <i className="fa fa-arrow-left" aria-hidden="true"></i>
           </div>
-          <div id='current-year'>{this.state.years[0].year}</div>
+          <div id='current-year'>{this.state.year.year}</div>
           <div id='next-year' onClick={() => this.nextYear()}>
-            <i class="fa fa-arrow-right" aria-hidden="true"></i>
+            <i className="fa fa-arrow-right" aria-hidden="true"></i>
           </div>
         </div>
         <CirclePicker
@@ -91,11 +107,13 @@ class App extends Component {
           circleSize={28} // size of circles
           circleSpacing={14} // space between circles
         />
-        {
-          this.state.years.map(year => (
-            <Year key={year} year={year} selectWeek={this.selectWeek} color={this.state.color}/>
-          ))
-        }
+        <Year
+          key={this.state.year.year}
+          year={this.state.year}
+          selectWeek={this.selectWeek}
+          hoverWeek={this.hoverWeek}
+          color={this.state.color}
+        />
       </div>
     );
   }

@@ -29,6 +29,6 @@
 div.circle-picker{
     justify-content: center !important;
     align-items: center !important;
-    width: 100vw !important;
-    margin: 1.5rem 0 0rem !important;
+    width: calc(100vw - 4rem) !important;
+    margin: calc(1rem + 14px) 2rem 0 !important;
 }
