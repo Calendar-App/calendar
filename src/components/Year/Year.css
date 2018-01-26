@@ -1,18 +1,4 @@
 .Year {
-<<<<<<< HEAD
-  margin-top: 1rem; }
-
-.year-header {
-  background: #0050c8;
-  padding: 1.5rem;
-  text-align: center;
-  font-size: 2.5rem;
-  color: white;
-  margin-bottom: 1rem; }
-
-.year-body {
-=======
->>>>>>> de9d3ab968e2d134831171eaae89e1aa51724b48
   display: flex;
   flex-flow: row wrap;
   justify-content: space-around; }
