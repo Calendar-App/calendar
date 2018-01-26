@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './App.css'
 
+import axios from 'axios';
+
 import Year from './components/Year/Year';
 import YearCreator from './year-creator';
 import { CirclePicker } from 'react-color';
@@ -16,7 +18,10 @@ class App extends Component {
       user: {
         id: 123
       },
-      color: 'grey'
+      color: 'grey',
+      modal: false,
+      modalFunction: () => { },
+      selectedWeek: -1
     }
   }
 
@@ -24,6 +29,25 @@ class App extends Component {
     let year = new YearCreator(2018)
     this.setState({
       year
+    })
+    axios.get(`/api/users`).then(response => {
+      let users = response.data
+      // let unavailableWeeks = []
+      // users.map(user => {
+      //   user.weeks.map(week => unavailableWeeks.push(week))
+      // })
+      let year = this.state.year
+      year.months = year.months.map(month => {
+        month.days = month.days.map(day => {
+          day.owner = users.filter(user => user.weeks.includes(day.week))[0]
+          return day
+        })
+        return month
+      })
+      this.setState({
+        users,
+        year
+      })
     })
   }
 
@@ -59,11 +83,29 @@ class App extends Component {
   }
 
   toggleModal = f => {
-
+    console.log(f)
+    this.setState({
+      modal: !this.state.modal,
+      modalFunction: f.bind(this)
+    })
   }
 
   selectWeek = week => {
+
+    let weekArray = this.state.year.months.reduce((arr, month) => {
+      month.days.map(day => {
+        if (day.week === week) arr.push(day)
+      })
+      return arr
+    }, [])
+
+    this.setState({
+      selectedWeek: week,
+      weekArray
+    })
     this.toggleModal(() => {
+      console.log(week)
+      console.log(weekArray)
       let year = this.state.year
       year.months = year.months.map(month => {
         month.days = month.days.map(day => {
@@ -82,6 +124,10 @@ class App extends Component {
     this.setState({
       color: color.hex
     })
+  }
+
+  save = () => {
+    axios.post(`/api/...`)
   }
 
   render() {
@@ -114,6 +160,19 @@ class App extends Component {
           hoverWeek={this.hoverWeek}
           color={this.state.color}
         />
+        {
+          this.state.modal ?
+            <div id="shadow" onClick={() => this.toggleModal(() => { })} >
+              <div id="modal" >
+                <div id="modal-header">Select Week {this.state.selectedWeek}?</div>
+                <div id="modal-subheader">{`${this.state.year.months[this.state.weekArray[0].month].fullMonth} ${this.state.weekArray[0].date} - ${this.state.year.months[this.state.weekArray[6].month].fullMonth} ${this.state.weekArray[6].date} (${this.state.year.year})`}</div>
+                <button onClick={() => this.toggleModal(() => { })} >Cancel</button>
+                <button onClick={() => this.state.modalFunction()} >Select</button>
+              </div>
+            </div>
+            :
+            null
+        }
       </div>
     );
   }
