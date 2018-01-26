@@ -14,3 +14,9 @@
 
 .disabled_day {
   background: gray; }
+
+.holiday {
+  background: lightblue; }
+
+.holiday:hover {
+  background: blue; }
