@@ -32,10 +32,6 @@ class App extends Component {
     })
     axios.get(`/api/users`).then(response => {
       let users = response.data
-      // let unavailableWeeks = []
-      // users.map(user => {
-      //   user.weeks.map(week => unavailableWeeks.push(week))
-      // })
       let year = this.state.year
       year.months = year.months.map(month => {
         month.days = month.days.map(day => {
@@ -53,6 +49,14 @@ class App extends Component {
 
   nextYear = () => {
     let year = new YearCreator(++this.state.year.year)
+    let users = this.state.users
+    year.months = year.months.map(month => {
+      month.days = month.days.map(day => {
+        day.owner = users.filter(user => user.weeks.includes(day.week))[0]
+        return day
+      })
+      return month
+    })
     this.setState({
       year
     })
@@ -60,6 +64,14 @@ class App extends Component {
 
   prevYear = () => {
     let year = new YearCreator(--this.state.year.year)
+    let users = this.state.users
+    year.months = year.months.map(month => {
+      month.days = month.days.map(day => {
+        day.owner = users.filter(user => user.weeks.includes(day.week))[0]
+        return day
+      })
+      return month
+    })
     this.setState({
       year
     })
