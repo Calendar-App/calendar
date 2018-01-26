@@ -6,5 +6,11 @@
 .day div {
   padding: 0.75rem 0; }
 
+.available_day {
+  background: white; }
+
+.available_day:hover {
+  background: blue; }
+
 .disabled_day {
   background: gray; }

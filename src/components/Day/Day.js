@@ -6,21 +6,25 @@ class Day extends Component {
         super(props)
 
         this.state = {
-
+            hoverWeek: null
         }
 
         this.availability = this.availability.bind(this);
     }
 
-    handleDayClick(week) {
-        console.log('week', week);
 
+    handleMouseOver(week) {
+        // console.log(week)
+        this.setState({
+            hoverWeek: week
+        })
     }
 
     availability() {
         return (!this.props.day.owner) ?
 
-            <div className="available_day" onClick={() => this.props.selectWeek(this.props.day.week)}>
+        // only changing background of that specific day... need to make mouseOver change the entire week's background
+            <div className="available_day" onClick={() => this.props.selectWeek(this.props.day.week)} onMouseOver={ () => this.handleMouseOver(this.props.day.week)}>  
                 {this.props.day.date}
             </div>
             :
