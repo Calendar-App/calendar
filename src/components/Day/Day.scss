@@ -14,7 +14,11 @@
 }
 
 .available_day {
-    // background: white;
+    background: white;
+}
+
+.available_day:hover {
+    background: blue;
 }
 
 .disabled_day {
