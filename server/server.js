@@ -2,7 +2,8 @@ require('dotenv').config();
 const express = require('express'),
     session = require('express-session'),
     bodyParser = require('body-parser'),
-    massive = require('massive')
+    massive = require('massive'),
+    controller = require('./controller');
 
 const app = express();
 app.use( express.static( `${__dirname}/../build` ) );
@@ -26,7 +27,7 @@ setTimeout(_ => {
 
 //endpoints//
 //GETS//
-
+app.get('/api/users', controller.getUsers)
 
 
 const path = require('path')
