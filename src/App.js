@@ -178,8 +178,10 @@ class App extends Component {
               <div id="modal" >
                 <div id="modal-header">Select Week {this.state.selectedWeek}?</div>
                 <div id="modal-subheader">{`${this.state.year.months[this.state.weekArray[0].month].fullMonth} ${this.state.weekArray[0].date} - ${this.state.year.months[this.state.weekArray[6].month].fullMonth} ${this.state.weekArray[6].date} (${this.state.year.year})`}</div>
-                <button onClick={() => this.toggleModal(() => { })} >Cancel</button>
-                <button onClick={() => this.state.modalFunction()} >Select</button>
+                <div id='button-container'>
+                  <button id='cancel' onClick={() => this.toggleModal(() => { })} >Cancel</button>
+                  <button id='select' onClick={() => this.state.modalFunction()} >Select</button>
+                </div>
               </div>
             </div>
             :
