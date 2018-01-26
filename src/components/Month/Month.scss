@@ -1,0 +1,21 @@
+
+.Month {
+    width: 30%;
+    margin: 1rem;
+    display: flex;
+    flex-direction: column;
+    border: 0.5px solid rgba(60, 180, 255, 1);
+}
+
+.month-header {
+    background: rgba(60, 180, 255, 1);
+    color: white;
+    padding: 0.5rem;
+    display: flex;
+    justify-content: center;
+}
+
+.month-body {
+    display: flex;
+    flex-flow: row wrap;
+}

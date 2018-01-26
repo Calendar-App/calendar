@@ -1,8 +1,8 @@
 .day {
-  width: 14.28%; }
-
-.available_day {
-  background: white; }
+  width: 14.28%;
+  padding: 0.5rem 0;
+  box-sizing: border-box;
+  text-align: center; }
 
 .disabled_day {
   background: gray; }
