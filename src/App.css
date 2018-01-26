@@ -1,0 +1,14 @@
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 25px;
+  padding: 20px;
+  background: #4E7AC7;
+  color: white; }
+
+#next-year {
+  cursor: pointer; }
+
+#prev-year {
+  cursor: pointer; }

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './App.css'
 
 import Year from './components/Year/Year';
 import YearCreator from './year-creator';
@@ -41,12 +42,12 @@ class App extends Component {
     })
   }
 
-  showMore(){
+  showMore() {
     let years = this.state.years
     years.push(new YearCreator(++this.state.years[0].year))
-      this.setState({
-        years
-      })
+    this.setState({
+      years
+    })
     console.log(this.state)
   }
 
@@ -63,10 +64,14 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <div className='year-arrows'>
-          <div id='next-year' onClick={() => this.nextYear()}>+</div>
+        <div className='calendar-header'>
+          <div id='next-year' onClick={() => this.nextYear()}>
+            <i class="fa fa-arrow-left" aria-hidden="true"></i>
+          </div>
           <div id='current-year'>{this.state.years[0].year}</div>
-          <div id='prev-year' onClick={() => this.pervYear()}>-</div>
+          <div id='prev-year' onClick={() => this.pervYear()}>
+            <i class="fa fa-arrow-right" aria-hidden="true"></i>
+          </div>
         </div>
         {this.state.years.map(year => <Year key={year} year={year} />)}
         <div className='show-more' onClick={() => this.showMore()}>Show More?</div>
