@@ -3,14 +3,19 @@
   margin: 1rem;
   display: flex;
   flex-direction: column;
-  border: 0.5px solid #3cb4ff; }
+  border: 0.5px solid #3cb4ff;
+  min-width: 14rem;
+  background: white;
+  color: rgba(0, 0, 0, 0.85); }
 
 .month-header {
   background: #3cb4ff;
   color: white;
-  padding: 0.5rem 1rem;
-  display: flex; }
+  padding: 0.675rem 1rem;
+  display: flex;
+  font-size: 1.125rem; }
 
 .month-body {
   display: flex;
-  flex-flow: row wrap; }
+  flex-flow: row wrap;
+  padding: 0.25rem; }

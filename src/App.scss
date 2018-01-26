@@ -2,8 +2,10 @@
 
 .App{
     font-family: Roboto;
+    background: #EEEEEE;
 }
-.calendar-header{
+
+.calendar-header {
    display: flex;
    justify-content: space-between;
    align-items: center;
@@ -16,10 +18,10 @@
    margin-bottom: 1rem
 }
 
-#next-year{
+#next-year {
     cursor: pointer;
 }
 
-#prev-year{
+#prev-year {
     cursor: pointer;
 }
