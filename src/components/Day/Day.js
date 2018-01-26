@@ -13,7 +13,7 @@ class Day extends Component {
     }
 
 
-    handleMouseOver(week) {
+    handleMouseEnter(week) {
         // console.log(week)
         this.setState({
             hoverWeek: week
@@ -24,7 +24,7 @@ class Day extends Component {
         return (!this.props.day.owner) ?
 
         // only changing background of that specific day... need to make mouseOver change the entire week's background
-            <div className="available_day" onClick={() => this.props.selectWeek(this.props.day.week)} onMouseOver={ () => this.handleMouseOver(this.props.day.week)}>  
+            <div className="available_day" onClick={() => this.props.selectWeek(this.props.day.week)} onMouseEnter={ () => this.handleMouseEnter(this.props.day.week)} >  
                 {this.props.day.date}
             </div>
             :

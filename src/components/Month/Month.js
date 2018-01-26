@@ -20,6 +20,15 @@ class Month extends Component {
         return (
             <div className="Month">
                 <div className="month-header">{month.fullMonth}</div>
+                <div className='day-of-week'>
+                    <span>SUN</span>
+                    <span>MON</span>
+                    <span>TUE</span>
+                    <span>WED</span>
+                    <span>THU</span>
+                    <span>FRI</span>
+                    <span>SAT</span>
+                </div>
                 <div className="month-body">
                     {
                         emptyDays.length ? 
