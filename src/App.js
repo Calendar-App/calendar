@@ -63,11 +63,11 @@ class App extends Component {
     return (
       <div className="App">
         <div className='calendar-header'>
-          <div id='next-year' onClick={() => this.nextYear()}>
-            <i class="fa fa-arrow-left" aria-hidden="true"></i>
+          <div id='prev-year' onClick={() => this.pervYear()}>
+            <i class="fa fa-arrow-left" aria-hidden="true"></i> 
           </div>
           <div id='current-year'>{this.state.years[0].year}</div>
-          <div id='prev-year' onClick={() => this.pervYear()}>
+          <div id='next-year' onClick={() => this.nextYear()}>
             <i class="fa fa-arrow-right" aria-hidden="true"></i>
           </div>
         </div>
