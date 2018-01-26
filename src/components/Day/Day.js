@@ -11,15 +11,30 @@ class Day extends Component {
     }
 
 
+    // if user is not admin
+    // unavailable days are gray
+    // selected days are the selected color
+    // hover days are the selected color with opacity 50%
+    // 
+    // unavailable days are always unselectable
+    // 
+    // if user is admin
+    // 
+    // 
+    // 
+    // 
+
+
+
     availability() {
         return (!this.props.day.owner) ?
 
-        // only changing background of that specific day... need to make mouseOver change the entire week's background
-            <div title={this.props.day.holiday} className={ this.props.day.holiday ? "holiday" : "available_day"} onClick={() => this.props.selectWeek(this.props.day.week)} >  
+            // only changing background of that specific day... need to make mouseOver change the entire week's background
+            <div title={this.props.day.holiday || ''} className={this.props.day.holiday ? "holiday" : "available_day"} onClick={() => this.props.selectWeek(this.props.day.week)} >
                 {this.props.day.date}
             </div>
             :
-            <div className="disabled_day" onClick={() => this.props.selectWeek(this.props.day.week)} style={{ 'background': this.props.color }}>
+            <div className="disabled_day" onClick={() => this.props.selectWeek(this.props.day.week)} >
                 {this.props.day.date}
             </div>
 
@@ -27,8 +42,28 @@ class Day extends Component {
 
     render() {
         // console.log(this.props)
+        let style = {}
+        if (this.props.day.hover) {
+            style = {
+                background: this.props.color,
+                opacity: 0.75,
+                color: "white"
+            }
+        }
+        if (this.props.day.selected) {
+            style = {
+                background: this.props.color,
+                opacity: 1
+            }
+        }
+        if (this.props.day.owner) {
+            style = {
+                background: 'rgba(0,0,0,0.25)',
+                opacity: 1
+            }
+        }
         return (
-            <div className={this.props.day.hover ? 'day hover' : 'day'} onMouseEnter={() => this.props.hoverWeek(this.props.day.week)} >
+            <div style={style} className={this.props.day.hover ? 'day hover' : 'day'} onMouseEnter={() => this.props.hoverWeek(this.props.day.week)} >
                 {this.availability()}
             </div>
         )
