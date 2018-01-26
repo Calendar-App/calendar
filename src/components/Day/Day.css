@@ -6,17 +6,18 @@
 .day div {
   padding: 0.75rem 0; }
 
+.hover div {
+  background: rgba(60, 180, 255, 0.75);
+  color: white; }
+
+.hover .disabled_day {
+  color: inherit; }
+
 .available_day {
   background: white; }
 
-.available_day:hover {
-  background: blue; }
-
 .disabled_day {
-  background: gray; }
+  background: rgba(0, 0, 0, 0.25); }
 
 .holiday {
-  background: lightblue; }
-
-.holiday:hover {
-  background: blue; }
+  background: rgba(60, 180, 255, 0.25); }
