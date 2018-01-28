@@ -7,9 +7,15 @@ class Month extends Component {
     render() {
         let { month } = this.props
         let emptyDays = month.days[0].day + 1
+        let afterDays = 7 - ((month.numOfDays + emptyDays - 1) % 7)
         for (let i = emptyDays; i; i--) {
             if (!Array.isArray(emptyDays)) emptyDays = []
             else emptyDays.push(null)
+        }
+        for (let i = afterDays; i; i--) {
+            if (i === 7) break
+            if (!Array.isArray(afterDays)) afterDays = []
+            afterDays.push(null)
         }
         return (
             <div className="Month">
@@ -28,7 +34,7 @@ class Month extends Component {
                         emptyDays.length ? 
                             emptyDays.map((item, i) => {
                                 return (
-                                    <div key={`${month.year}${month.month}${i}000`} className="day" />
+                                    <div key={`${month.year}${month.month}${i}000`} className="day" onMouseEnter={() => this.props.hoverWeek(-1)} />
                                 )
                             })
                             :
@@ -46,6 +52,16 @@ class Month extends Component {
                                 />
                             )
                         })
+                    }
+                    {
+                        afterDays.length ?
+                            afterDays.map((item, i) => {
+                                return (
+                                    <div key={`${month.year}${month.month}${i}000000`} className="day" onMouseEnter={() => this.props.hoverWeek(-1)} />
+                                )
+                            })
+                            :
+                            null
                     }
                 </div>
             </div>

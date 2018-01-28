@@ -18,7 +18,10 @@ class App extends Component {
       user: {
         id: 123
       },
-      color: 'grey',
+      users: [{
+        id: 0
+      }],
+      color: '#f44336',
       modal: false,
       modalFunction: () => { },
       selectedWeek: -1
@@ -78,6 +81,7 @@ class App extends Component {
   }
 
   hoverWeek = week => {
+    if (this.state.modal) return
     if (this.week === week) return // if we hover over another day in the same week
     else this.week = week
     let year = this.state.year
@@ -94,34 +98,36 @@ class App extends Component {
     })
   }
 
-  toggleModal = f => {
-    console.log(f)
+  toggleModal = cb => {
+    console.log(cb)
     this.setState({
       modal: !this.state.modal,
-      modalFunction: f.bind(this)
+      modalFunction: cb.bind(this)
     })
   }
 
   selectWeek = week => {
 
+    
     let weekArray = this.state.year.months.reduce((arr, month) => {
       month.days.map(day => {
         if (day.week === week) arr.push(day)
       })
       return arr
     }, [])
-
+    
     this.setState({
       selectedWeek: week,
       weekArray
     })
+    
     this.toggleModal(() => {
       console.log(week)
       console.log(weekArray)
       let year = this.state.year
       year.months = year.months.map(month => {
         month.days = month.days.map(day => {
-          if (day.week === week) day.owner = this.state.user.id
+          if (day.week === week) day.selected = true
           return day
         })
         return month
@@ -130,6 +136,9 @@ class App extends Component {
         year
       })
     })
+
+    this.hoverWeek(week)
+
   }
 
   handleColorChange = (color, event) => {
@@ -171,6 +180,7 @@ class App extends Component {
           selectWeek={this.selectWeek}
           hoverWeek={this.hoverWeek}
           color={this.state.color}
+          user={this.state.user}
         />
         {
           this.state.modal ?
@@ -178,8 +188,10 @@ class App extends Component {
               <div id="modal" >
                 <div id="modal-header">Select Week {this.state.selectedWeek}?</div>
                 <div id="modal-subheader">{`${this.state.year.months[this.state.weekArray[0].month].fullMonth} ${this.state.weekArray[0].date} - ${this.state.year.months[this.state.weekArray[6].month].fullMonth} ${this.state.weekArray[6].date} (${this.state.year.year})`}</div>
-                <button onClick={() => this.toggleModal(() => { })} >Cancel</button>
-                <button onClick={() => this.state.modalFunction()} >Select</button>
+                <div id='button-container'>
+                  <button id='cancel' onClick={() => this.toggleModal(() => { })} >Cancel</button>
+                  <button id='select' onClick={() => this.state.modalFunction()} >Select</button>
+                </div>
               </div>
             </div>
             :
