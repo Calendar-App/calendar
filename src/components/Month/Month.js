@@ -48,6 +48,7 @@ class Month extends Component {
                                     day={day}
                                     selectWeek={this.props.selectWeek}
                                     hoverWeek={this.props.hoverWeek}
+                                    hoveredWeek={this.props.hoveredWeek}
                                     color={this.props.color}
                                 />
                             )
@@ -57,7 +58,12 @@ class Month extends Component {
                         afterDays.length ?
                             afterDays.map((item, i) => {
                                 return (
-                                    <div key={`${month.year}${month.month}${i}000000`} className="day" onMouseEnter={() => this.props.hoverWeek(-1)} />
+                                    <div
+                                        key={`${month.year}${month.month}${i}000000`}
+                                        className="day"
+                                        onMouseEnter={() => this.props.hoverWeek(month.weeks[month.weeks.length - 1].week)}
+                                        onClick={() => this.props.selectWeek()}
+                                    />
                                 )
                             })
                             :
