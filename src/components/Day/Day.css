@@ -4,6 +4,9 @@
   position: relative;
   overflow: visible; }
 
+.day:hover {
+  cursor: default; }
+
 .holiday {
   position: absolute;
   top: 0;

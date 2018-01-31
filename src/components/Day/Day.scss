@@ -1,3 +1,4 @@
+
 // .day {
 //     display: flex;
 //     justify-content: center; 
@@ -8,6 +9,10 @@
     text-align: center;
     position: relative;
     overflow: visible;
+}
+
+.day:hover {
+    cursor: default;
 }
 
 .holiday {
