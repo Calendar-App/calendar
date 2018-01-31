@@ -26,8 +26,9 @@
     position: absolute;
     top: 100%;
     left: 0;
+    padding: 0.25rem;
     background: rgba(0,0,0,0.5);
-    z-index: 4;
+    z-index: 10;
 }
 .holiday:hover .holiday-description {
     display: block;
