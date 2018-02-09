@@ -116,13 +116,15 @@ class App extends Component {
       weekArray
     })
     
+
+  //need to update so we can de-select week
     this.toggleModal(() => {
       console.log(week)
       console.log(weekArray)
       let year = this.state.year
       year.months = year.months.map(month => {
         month.days = month.days.map(day => {
-          if (day.week === week) day.selected = true
+          if (day.week === week) day.selected = true  //will need to change to false
           return day
         })
         return month
