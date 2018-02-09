@@ -48,34 +48,35 @@ class Day extends Component {
 
     render() {
         // console.log(this.props)
+        let { day } = this.props
         let style = {}
-        if (this.props.day.hover) {
+        if (day.week === this.props.hoveredWeek) {
             style = {
                 background: this.props.color,
                 opacity: 0.75,
                 color: "white"
             }
         }
-        if (this.props.day.selected) {
+        if (day.selected) {
             style = {
                 background: this.props.color,
                 opacity: 1
             }
         }
-        if (this.props.day.owner) {
+        if (day.owner) {
             style = {
                 background: 'rgba(0,0,0,0.25)',
                 opacity: 1
             }
         }
         return (
-            <div style={style} className={this.props.day.hover ? 'day hover' : 'day'} onMouseEnter={() => this.props.hoverWeek(this.props.day.week)} onClick={this.handleClick} >
+            <div style={style} className={day.week === this.props.hoveredWeek ? 'day hover' : 'day'} onMouseEnter={() => this.props.hoverWeek(day.week)} onClick={this.handleClick} >
                 {this.availability()}
                 {
-                    this.props.day.holiday && !this.props.day.owner ?
+                    day.holiday && !day.owner ?
                         <div className="holiday">
                             <div style={{}} className="holiday-description">
-                                {this.props.day.holiday}
+                                {day.holiday}
                             </div>
                         </div>
                         :

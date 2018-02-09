@@ -15,6 +15,7 @@ class Year extends Component {
                                 month={month}
                                 selectWeek={this.props.selectWeek}
                                 hoverWeek={this.props.hoverWeek}
+                                hoveredWeek={this.props.hoveredWeek}
                                 color={this.props.color}
                             />
                         )

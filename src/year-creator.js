@@ -121,9 +121,12 @@ class Month {
                 break;
         }
         this.days = []
+        this.weeks = []
         for (let i = 0; i < this.numOfDays; i++) {
             let date = new Date(this.year, this.month, i + 1)
-            this.days.push(new Day(date, week))
+            let day = new Day(date, week)
+            this.days.push(day)
+            if (!this.weeks.includes(day.week)) this.weeks.push(day)
         }
     }
     getHolidays() {
@@ -144,6 +147,13 @@ class Year {
             let date = new Date(year, i, 1)
             this.months.push(new Month(date, week))
         }
+        this.weeks = [[], []]
+        this.months.map(month => {
+            month.days.map(day => {
+                if (!this.weeks[day.week]) this.weeks.push([])
+                this.weeks[day.week].push(day)
+            })
+        })
     }
     getHolidays() {
         let holidays = []
