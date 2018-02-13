@@ -6,3 +6,23 @@
 //         - click to expand for more information
 //     - view maintenance weeks on bottom of side modal
 //     - cancel week / delete user 
+
+import React, { Component } from 'react';
+import './UserList.css';
+
+class UserList extends Component {
+    constructor() {
+        super()
+
+    }
+
+    render() {
+        return(
+            <div className='userList'>
+
+            </div>
+        )
+    }
+}
+
+export default UserList;
