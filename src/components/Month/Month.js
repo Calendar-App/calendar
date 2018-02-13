@@ -47,6 +47,7 @@ class Month extends Component {
                                     key={`${month.year}${month.month}${day.date}`}
                                     day={day}
                                     selectWeek={this.props.selectWeek}
+                                    selectedWeeks={this.props.selectedWeeks}
                                     hoverWeek={this.props.hoverWeek}
                                     hoveredWeek={this.props.hoveredWeek}
                                     color={this.props.color}

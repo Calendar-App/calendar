@@ -58,7 +58,7 @@ class Day extends Component {
                 color: "white"
             }
         }
-        if (day.selected) {
+        if (this.props.selectedWeeks.includes(day.week)) {
             style = {
                 background: this.props.color,
                 opacity: 1

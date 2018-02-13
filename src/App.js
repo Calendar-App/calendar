@@ -41,14 +41,13 @@ class App extends Component {
     axios.get(`/api/users`).then(response => {
       let users = response.data
       let year = this.state.year
-      year.months = year.months.map(month => {
-        month.days = month.days.map(day => {
-          day.owner = users.filter(user => user.weeks.includes(day.week))[0]
-          return day
-        })
-        return month
-      })
-      console.log(year.weeks)
+      for (let i = 0; i < 12; i++) {
+        let month = year.months[i]
+        for (let j = 0; j < month.days.length; j++) {
+          let day = month.days[j]
+          day.owner = users.find(user => user.weeks.includes(day.week))
+        }
+      }
       this.setState({
         users,
         year
@@ -56,31 +55,18 @@ class App extends Component {
     })
   }
 
-  nextYear = () => {
-    let year = new YearCreator(++this.state.year.year)
-    let users = this.state.users
-    year.months = year.months.map(month => {
-      month.days = month.days.map(day => {
-        day.owner = users.filter(user => user.weeks.includes(day.week))[0]
-        return day
-      })
-      return month
-    })
-    this.setState({
-      year
-    })
-  }
-
-  prevYear = () => {
-    let year = new YearCreator(--this.state.year.year)
-    let users = this.state.users
-    year.months = year.months.map(month => {
-      month.days = month.days.map(day => {
-        day.owner = users.filter(user => user.weeks.includes(day.week))[0]
-        return day
-      })
-      return month
-    })
+  changeYear = num => {
+    console.log(this.state.year.year + num)
+    let year = new YearCreator(this.state.year.year + num)
+    let { users } = this.state
+    for (let i = 0; i < 12; i++) {
+      let month = year.months[i]
+      for (let j = 0; j < month.days.length; j++) {
+        let day = month.days[j]
+        day.owner = users.find(user => user.weeks.includes(day.week))
+      }
+    }
+    console.log(year)
     this.setState({
       year
     })
@@ -113,27 +99,14 @@ class App extends Component {
     console.log(bool)
     console.log(week)
     console.log(weekArray)
-
     let { selectedWeeks } = this.state
-
     if (selectedWeeks.includes(week)) {
       selectedWeeks.splice(selectedWeeks.indexOf(week), 1)
     }
     else {
       selectedWeeks.push(week)
     }
-
-    let year = Object.assign({}, this.state.year)
-    year.months = year.months.map(month => {
-      month.days = month.days.map(day => {
-        if (day.week === week) day.selected = bool // true/false
-        return day
-      })
-      return month
-    })
-
     this.setState({
-      year,
       selectedWeeks
     })
   }
@@ -145,18 +118,13 @@ class App extends Component {
       })
       return arr
     }, [])
-
     let bool = !this.state.selectedWeeks.includes(week)
-
     this.setState({
       selectedWeek: week,
       weekArray
     })
-
     this.toggleModal(() => this.modalFunction(bool, week, weekArray), bool)
-
     this.hoverWeek(week)
-
   }
 
   handleColorChange = (color, event) => {
@@ -173,11 +141,11 @@ class App extends Component {
     return (
       <div className="App">
         <div className='calendar-header'>
-          <div id='prev-year' onClick={() => this.prevYear()}>
+          <div id='prev-year' onClick={() => this.changeYear(-1)}>
             <i className="fa fa-arrow-left" aria-hidden="true"></i>
           </div>
           <div id='current-year'>{this.state.year.year}</div>
-          <div id='next-year' onClick={() => this.nextYear()}>
+          <div id='next-year' onClick={() => this.changeYear(1)}>
             <i className="fa fa-arrow-right" aria-hidden="true"></i>
           </div>
         </div>
@@ -196,6 +164,7 @@ class App extends Component {
           key={this.state.year.year}
           year={this.state.year}
           selectWeek={this.selectWeek}
+          selectedWeeks={this.state.selectedWeeks}
           hoverWeek={this.hoverWeek}
           hoveredWeek={this.state.hoveredWeek}
           color={this.state.color}
