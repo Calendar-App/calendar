@@ -15,12 +15,13 @@ class App extends Component {
       year: {
         months: []
       },
-      user: {
+      currentUser: {
         id: 123
       },
       users: [{
         id: 0
       }],
+      // unavailableDays: [],
       color: '#f44336',
       modal: false,
       modalFunction: () => { },
@@ -38,18 +39,28 @@ class App extends Component {
     this.setState({
       year
     })
+    // axios.get(`/auth/me`).then(response => {
+    //   this.setState({
+    //     currentUser: response.data
+    //   })
+    // })
     axios.get(`/api/users`).then(response => {
       let users = response.data
       let year = this.state.year
+      // let unavailableDays = []
       for (let i = 0; i < 12; i++) {
         let month = year.months[i]
         for (let j = 0; j < month.days.length; j++) {
           let day = month.days[j]
           day.owner = users.find(user => user.weeks.includes(day.week))
+          // if (!unavailableDays.includes(day.week) && day.owner) {
+          //   unavailableDays.push(day.week)
+          // }
         }
       }
       this.setState({
         users,
+        // unavailableDays,
         year
       })
     })
@@ -168,7 +179,7 @@ class App extends Component {
           hoverWeek={this.hoverWeek}
           hoveredWeek={this.state.hoveredWeek}
           color={this.state.color}
-          user={this.state.user}
+          currentUser={this.state.currentUser}
         />
         {
           this.state.modal ?

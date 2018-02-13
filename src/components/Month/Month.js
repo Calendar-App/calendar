@@ -51,6 +51,7 @@ class Month extends Component {
                                     hoverWeek={this.props.hoverWeek}
                                     hoveredWeek={this.props.hoveredWeek}
                                     color={this.props.color}
+                                    currentUser={this.props.currentUser}
                                 />
                             )
                         })
