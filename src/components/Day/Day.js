@@ -26,6 +26,7 @@ class Day extends Component {
     // 
 
     handleClick = () => {
+        console.log(this.props.day)
         if (this.props.day.owner) return
         else this.props.selectWeek(this.props.day.week)
     }
@@ -57,7 +58,7 @@ class Day extends Component {
                 color: "white"
             }
         }
-        if (day.selected) {
+        if (this.props.selectedWeeks.includes(day.week)) {
             style = {
                 background: this.props.color,
                 opacity: 1

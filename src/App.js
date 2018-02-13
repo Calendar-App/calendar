@@ -15,16 +15,20 @@ class App extends Component {
       year: {
         months: []
       },
-      user: {
+      currentUser: {
         id: 123
       },
       users: [{
         id: 0
       }],
+      // unavailableDays: [],
       color: '#f44336',
       modal: false,
       modalFunction: () => { },
+      deselecting: false,
       selectedWeek: -1,
+      selectedWeeks: [],
+      weekArray: [],
       hoveredWeek: null,
       lastHoveredWeek: null
     }
@@ -35,49 +39,45 @@ class App extends Component {
     this.setState({
       year
     })
+    // axios.get(`/auth/me`).then(response => {
+    //   this.setState({
+    //     currentUser: response.data
+    //   })
+    // })
     axios.get(`/api/users`).then(response => {
       let users = response.data
       let year = this.state.year
-      year.months = year.months.map(month => {
-        month.days = month.days.map(day => {
-          day.owner = users.filter(user => user.weeks.includes(day.week))[0]
-          return day
-        })
-        return month
-      })
-      console.log(year.weeks)
+      // let unavailableDays = []
+      for (let i = 0; i < 12; i++) {
+        let month = year.months[i]
+        for (let j = 0; j < month.days.length; j++) {
+          let day = month.days[j]
+          day.owner = users.find(user => user.weeks.includes(day.week))
+          // if (!unavailableDays.includes(day.week) && day.owner) {
+          //   unavailableDays.push(day.week)
+          // }
+        }
+      }
       this.setState({
         users,
+        // unavailableDays,
         year
       })
     })
   }
 
-  nextYear = () => {
-    let year = new YearCreator(++this.state.year.year)
-    let users = this.state.users
-    year.months = year.months.map(month => {
-      month.days = month.days.map(day => {
-        day.owner = users.filter(user => user.weeks.includes(day.week))[0]
-        return day
-      })
-      return month
-    })
-    this.setState({
-      year
-    })
-  }
-
-  prevYear = () => {
-    let year = new YearCreator(--this.state.year.year)
-    let users = this.state.users
-    year.months = year.months.map(month => {
-      month.days = month.days.map(day => {
-        day.owner = users.filter(user => user.weeks.includes(day.week))[0]
-        return day
-      })
-      return month
-    })
+  changeYear = num => {
+    console.log(this.state.year.year + num)
+    let year = new YearCreator(this.state.year.year + num)
+    let { users } = this.state
+    for (let i = 0; i < 12; i++) {
+      let month = year.months[i]
+      for (let j = 0; j < month.days.length; j++) {
+        let day = month.days[j]
+        day.owner = users.find(user => user.weeks.includes(day.week))
+      }
+    }
+    console.log(year)
     this.setState({
       year
     })
@@ -95,11 +95,30 @@ class App extends Component {
     }
   }
 
-  toggleModal = cb => {
+  toggleModal = (cb, bool) => {
+    console.log(bool)
     console.log(cb)
+    console.log(this.state)
     this.setState({
       modal: !this.state.modal,
-      modalFunction: cb.bind(this)
+      modalFunction: cb.bind(this),
+      deselecting: !bool
+    })
+  }
+
+  modalFunction = (bool, week, weekArray) => {
+    console.log(bool)
+    console.log(week)
+    console.log(weekArray)
+    let { selectedWeeks } = this.state
+    if (selectedWeeks.includes(week)) {
+      selectedWeeks.splice(selectedWeeks.indexOf(week), 1)
+    }
+    else {
+      selectedWeeks.push(week)
+    }
+    this.setState({
+      selectedWeeks
     })
   }
 
@@ -110,11 +129,12 @@ class App extends Component {
       })
       return arr
     }, [])
-    
+    let bool = !this.state.selectedWeeks.includes(week)
     this.setState({
       selectedWeek: week,
       weekArray
     })
+<<<<<<< HEAD
     
 
   //need to update so we can de-select week
@@ -134,8 +154,10 @@ class App extends Component {
       })
     })
 
+=======
+    this.toggleModal(() => this.modalFunction(bool, week, weekArray), bool)
+>>>>>>> master
     this.hoverWeek(week)
-
   }
 
   handleColorChange = (color, event) => {
@@ -152,11 +174,11 @@ class App extends Component {
     return (
       <div className="App">
         <div className='calendar-header'>
-          <div id='prev-year' onClick={() => this.prevYear()}>
+          <div id='prev-year' onClick={() => this.changeYear(-1)}>
             <i className="fa fa-arrow-left" aria-hidden="true"></i>
           </div>
           <div id='current-year'>{this.state.year.year}</div>
-          <div id='next-year' onClick={() => this.nextYear()}>
+          <div id='next-year' onClick={() => this.changeYear(1)}>
             <i className="fa fa-arrow-right" aria-hidden="true"></i>
           </div>
         </div>
@@ -175,20 +197,21 @@ class App extends Component {
           key={this.state.year.year}
           year={this.state.year}
           selectWeek={this.selectWeek}
+          selectedWeeks={this.state.selectedWeeks}
           hoverWeek={this.hoverWeek}
           hoveredWeek={this.state.hoveredWeek}
           color={this.state.color}
-          user={this.state.user}
+          currentUser={this.state.currentUser}
         />
         {
           this.state.modal ?
             <div id="shadow" onClick={() => this.toggleModal(() => { })} >
-              <div id="modal" >
-                <div id="modal-header">Select Week {this.state.selectedWeek}?</div>
+              <div id="modal" onClick={e => e.stopPropagation()} >
+                <div id="modal-header">{this.state.deselecting ? "Deselect" : "Select"} Week {this.state.selectedWeek}?</div>
                 <div id="modal-subheader">{`${this.state.year.months[this.state.weekArray[0].month].fullMonth} ${this.state.weekArray[0].date} - ${this.state.year.months[this.state.weekArray[6].month].fullMonth} ${this.state.weekArray[6].date} (${this.state.year.year})`}</div>
                 <div id='button-container'>
                   <button id='cancel' onClick={() => this.toggleModal(() => { })} >Cancel</button>
-                  <button id='select' onClick={() => this.state.modalFunction()} >Select</button>
+                  <button id='select' onClick={() => { this.state.modalFunction(); this.toggleModal(() => { }) }} >{this.state.deselecting ? "Deselect" : "Select"}</button>
                 </div>
               </div>
             </div>
