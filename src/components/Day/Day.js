@@ -26,6 +26,7 @@ class Day extends Component {
     // 
 
     handleClick = () => {
+        console.log(this.props.day)
         if (this.props.day.owner) return
         else this.props.selectWeek(this.props.day.week)
     }

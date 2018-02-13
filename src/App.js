@@ -24,7 +24,10 @@ class App extends Component {
       color: '#f44336',
       modal: false,
       modalFunction: () => { },
+      deselecting: false,
       selectedWeek: -1,
+      selectedWeeks: [],
+      weekArray: [],
       hoveredWeek: null,
       lastHoveredWeek: null
     }
@@ -95,11 +98,43 @@ class App extends Component {
     }
   }
 
-  toggleModal = cb => {
+  toggleModal = (cb, bool) => {
+    console.log(bool)
     console.log(cb)
+    console.log(this.state)
     this.setState({
       modal: !this.state.modal,
-      modalFunction: cb.bind(this)
+      modalFunction: cb.bind(this),
+      deselecting: !bool
+    })
+  }
+
+  modalFunction = (bool, week, weekArray) => {
+    console.log(bool)
+    console.log(week)
+    console.log(weekArray)
+
+    let { selectedWeeks } = this.state
+
+    if (selectedWeeks.includes(week)) {
+      selectedWeeks.splice(selectedWeeks.indexOf(week), 1)
+    }
+    else {
+      selectedWeeks.push(week)
+    }
+
+    let year = Object.assign({}, this.state.year)
+    year.months = year.months.map(month => {
+      month.days = month.days.map(day => {
+        if (day.week === week) day.selected = bool // true/false
+        return day
+      })
+      return month
+    })
+
+    this.setState({
+      year,
+      selectedWeeks
     })
   }
 
@@ -110,27 +145,15 @@ class App extends Component {
       })
       return arr
     }, [])
-    
+
+    let bool = !this.state.selectedWeeks.includes(week)
+
     this.setState({
       selectedWeek: week,
       weekArray
     })
-    
-    this.toggleModal(() => {
-      console.log(week)
-      console.log(weekArray)
-      let year = this.state.year
-      year.months = year.months.map(month => {
-        month.days = month.days.map(day => {
-          if (day.week === week) day.selected = true
-          return day
-        })
-        return month
-      })
-      this.setState({
-        year
-      })
-    })
+
+    this.toggleModal(() => this.modalFunction(bool, week, weekArray), bool)
 
     this.hoverWeek(week)
 
@@ -181,12 +204,12 @@ class App extends Component {
         {
           this.state.modal ?
             <div id="shadow" onClick={() => this.toggleModal(() => { })} >
-              <div id="modal" >
-                <div id="modal-header">Select Week {this.state.selectedWeek}?</div>
+              <div id="modal" onClick={e => e.stopPropagation()} >
+                <div id="modal-header">{this.state.deselecting ? "Deselect" : "Select"} Week {this.state.selectedWeek}?</div>
                 <div id="modal-subheader">{`${this.state.year.months[this.state.weekArray[0].month].fullMonth} ${this.state.weekArray[0].date} - ${this.state.year.months[this.state.weekArray[6].month].fullMonth} ${this.state.weekArray[6].date} (${this.state.year.year})`}</div>
                 <div id='button-container'>
                   <button id='cancel' onClick={() => this.toggleModal(() => { })} >Cancel</button>
-                  <button id='select' onClick={() => this.state.modalFunction()} >Select</button>
+                  <button id='select' onClick={() => { this.state.modalFunction(); this.toggleModal(() => { }) }} >{this.state.deselecting ? "Deselect" : "Select"}</button>
                 </div>
               </div>
             </div>
