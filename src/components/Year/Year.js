@@ -4,7 +4,6 @@ import './Year.css';
 
 class Year extends Component {
     render() {
-        // let year = new YearCreator(2018)
         return (
             <div className="Year">
                 {
@@ -14,6 +13,7 @@ class Year extends Component {
                                 key={`${month.year}${month.month}`}
                                 month={month}
                                 selectWeek={this.props.selectWeek}
+                                selectedWeek={this.props.selectedWeek}
                                 selectedWeeks={this.props.selectedWeeks}
                                 hoverWeek={this.props.hoverWeek}
                                 hoveredWeek={this.props.hoveredWeek}
