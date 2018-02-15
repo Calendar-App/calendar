@@ -5,5 +5,5 @@ import App from './App';
 import UserList from './components/UserList/UserList';
 import registerServiceWorker from './registerServiceWorker';
 
-ReactDOM.render(<UserList />, document.getElementById('root'));
+ReactDOM.render(<App />, document.getElementById('root'));
 registerServiceWorker();
