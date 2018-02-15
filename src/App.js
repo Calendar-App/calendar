@@ -134,29 +134,7 @@ class App extends Component {
       selectedWeek: week,
       weekArray
     })
-<<<<<<< HEAD
-    
-
-  //need to update so we can de-select week
-    this.toggleModal(() => {
-      console.log(week)
-      console.log(weekArray)
-      let year = this.state.year
-      year.months = year.months.map(month => {
-        month.days = month.days.map(day => {
-          if (day.week === week) day.selected = true  //will need to change to false
-          return day
-        })
-        return month
-      })
-      this.setState({
-        year
-      })
-    })
-
-=======
     this.toggleModal(() => this.modalFunction(bool, week, weekArray), bool)
->>>>>>> master
     this.hoverWeek(week)
   }
 
