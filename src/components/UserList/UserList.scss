@@ -1,0 +1,16 @@
+.calendar-and-modal {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.admin-side-modal {
+    width: 25%;
+    background-color: rgba(60, 180, 255, 0.5);
+    margin: 1rem;
+}
+
+.admin-calendar {
+    width: 80%;
+}
+
