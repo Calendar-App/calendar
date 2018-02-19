@@ -2,8 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import UserList from './components/UserList/UserList';
+import AdminView from './components/AdminView/AdminView';
 import registerServiceWorker from './registerServiceWorker';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(<AdminView />, document.getElementById('root'));
 registerServiceWorker();
