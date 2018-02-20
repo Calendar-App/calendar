@@ -61,9 +61,17 @@ class Day extends Component {
         }
         // styles for a day that has been already selected by someone else - this overrides both the selected and the hovered styles
         if (day.owner) {
-            style = {
-                background: 'rgba(0,0,0,0.25)',
-                opacity: 1
+            if (this.props.currentUser.admin) {
+                style = {
+                    background: day.owner.color,
+                    opacity: 1
+                }
+            }
+            else {
+                style = {
+                    background: 'rgba(0,0,0,0.25)',
+                    opacity: 1
+                }
             }
         }
         return (
@@ -78,7 +86,7 @@ class Day extends Component {
                 {
                     day.holiday && !day.owner ?
                         <div className="holiday">
-                            <div style={{}} className="holiday-description">
+                            <div style={{ color: 'white'}} className="holiday-description">
                                 {day.holiday}
                             </div>
                         </div>

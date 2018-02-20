@@ -17,13 +17,19 @@ class App extends Component {
       },
       // current user object - to be received from the rest of the site or from the server
       currentUser: {
-        id: 123
+        id: 123,
+        admin: true
       },
       // all of the users - to be received from the rest of the site or from the server
       users: [{
         id: 0,
         weeks: [] // weeks of the year owned by that user
       }],
+      // colors to display in color picker
+      colors: ["#f44336", "#e91e63", "#9c27b0", "#673ab7", "#3f51b5",
+        "#2196f3", "#03a9f4", "#00bcd4", "#009688", "#4caf50",
+        "#8bc34a", "#cddc39", "#ffeb3b", "#ffc107", "#ff9800",
+        "#cc7000", "#795548", "#607d8b"],
       // selected color to display on the screen
       color: '#f44336',
       // whether or not the modal should display
@@ -59,6 +65,16 @@ class App extends Component {
     axios.get(`/api/users`).then(response => {
       let users = response.data
       let year = this.state.year
+      // each user should have a different color in the admin site
+      if (this.state.currentUser.admin) {
+        let colors = [...this.state.colors]
+        // mapping through the users to assign each one a color
+        for (let i = 0; i < users.length; i++) {
+          let randomIndex = ~~(Math.random() * colors.length)
+          users[i].color = colors.splice(randomIndex, 1)
+          console.log(users[i])
+        }
+      }
       // mapping through the year > months > days to add an owner to days that already belong to someone
       for (let i = 0; i < 12; i++) {
         let month = year.months[i]
@@ -206,12 +222,7 @@ class App extends Component {
 
         <CirclePicker
           onChangeComplete={this.handleColorChange}
-          colors={
-            ["#f44336", "#e91e63", "#9c27b0", "#673ab7", "#3f51b5",
-              "#2196f3", "#03a9f4", "#00bcd4", "#009688", "#4caf50",
-              "#8bc34a", "#cddc39", "#ffeb3b", "#ffc107", "#ff9800",
-              "#cc7000", "#795548", "#607d8b"]
-          }
+          colors={this.state.colors}
           circleSize={28} // size of circles
           circleSpacing={14} // space between circles
         />
