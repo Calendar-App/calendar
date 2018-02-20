@@ -8,7 +8,7 @@
 //     - cancel week / delete user 
 
 import React, { Component } from 'react';
-import './UserList.css';
+import './AdminView.css';
 
 import axios from 'axios';
 
@@ -17,7 +17,7 @@ import YearCreator from '../../year-creator';
 import { CirclePicker } from 'react-color';
 
 
-class UserList extends Component {
+class AdminView extends Component {
   constructor() {
     super()
 
@@ -30,7 +30,9 @@ class UserList extends Component {
       },
       users: [{
         id: 0,
-        weeks: []
+        name: '',
+        weeks: [],
+        maxweeks: null
       }],
       color: '#f44336',
       modal: false,
@@ -66,7 +68,7 @@ class UserList extends Component {
       this.setState({
         users,
         year
-      })
+      }, () => console.log(this.state.users))
     })
   }
 
@@ -131,8 +133,15 @@ hoverWeek = hoveredWeek => {
 
 
   render() {
+
+    let user = this.state.users.map( (user, i) => {
+      return <div key={i} className='userList'>
+
+      </div>
+    })
+
     return (
-      <div className='UserList'>
+      <div className='AdminView'>
 
         {/* HEADER */}
 
@@ -154,6 +163,10 @@ hoverWeek = hoveredWeek => {
           <div className='admin-side-modal'>
             <div className='side-header'>
 
+            </div>
+
+            <div className='admin-side-control'>
+              
             </div>
           </div>
 
@@ -203,4 +216,4 @@ hoverWeek = hoveredWeek => {
   }
 }
 
-export default UserList;
+export default AdminView;
