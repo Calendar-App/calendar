@@ -5,5 +5,5 @@ import App from './App';
 import AdminView from './components/AdminView/AdminView';
 import registerServiceWorker from './registerServiceWorker';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(<AdminView />, document.getElementById('root'));
 registerServiceWorker();
