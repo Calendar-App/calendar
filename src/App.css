@@ -1,7 +1,15 @@
 @import url("https://fonts.googleapis.com/css?family=Roboto");
 .App {
+  width: 100vw;
+  background: #EEEEEE;
+  overflow: hidden; }
+
+.content {
+  display: flex; }
+
+.calendar-container {
   font-family: Roboto;
-  background: #EEEEEE; }
+  width: 80vw; }
 
 .calendar-header {
   display: flex;

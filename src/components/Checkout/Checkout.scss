@@ -1,0 +1,35 @@
+.checkout-container{
+    width: 20vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 1rem;
+
+    .checkout-tile{
+        min-height: 200px;
+        border:  1px solid #3cb4ff;
+        display: flex;
+        flex-direction: column;
+        background: white;
+        // position: fixed;
+
+        #checkout-header{
+            font-size: 2rem;
+            padding: .5rem;
+            background: #3cb4ff;
+            display: flex;
+            justify-content: space-around;
+            color: white;
+        }
+
+        #checkout-subheader{
+            background: rgba(60, 180, 255, 0.5);
+            padding: .5rem;
+
+        }
+
+        #total{
+            padding: .5rem;
+        }
+    }
+}

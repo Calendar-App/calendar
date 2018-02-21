@@ -71,7 +71,8 @@ class Day extends Component {
                 style={style}
                 className={day.week === this.props.hoveredWeek ? 'day hover' : 'day'}
                 onMouseEnter={() => this.props.hoverWeek(day.week)}
-                onClick={this.handleClick} >
+                onClick={this.handleClick} 
+                >
                 {/* DAY */}
                 {this.availability()}
                 {/* HOLIDAY LABEL */}
