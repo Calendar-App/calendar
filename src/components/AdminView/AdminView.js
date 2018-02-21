@@ -131,12 +131,62 @@ hoverWeek = hoveredWeek => {
   })
 }
 
+removeUser(id) {
+  axios.delete(`api/deleteuser/${id}`)
+       .then( res => {
+        axios.get(`/api/users`).then(response => {
+          let users = response.data;
+          let year = this.state.year;
+    
+          for (let i = 0; i < 12; i++) {
+            let month = year.months[i]
+            for (let j = 0; j < month.days.length; j++) {
+              let day = month.days[j]
+              day.owner = users.find(user => user.weeks.includes(day.week))
+            }
+          }
+          this.setState({
+            users,
+            year
+          }, () => console.log(this.state.users))
+        })
+       })
+}
+
+removeWeek(id, week) {
+  axios.delete(`api/removeweek/${id}/${week}`)
+       .then( res=> {
+        axios.get(`/api/users`).then(response => {
+          let users = response.data;
+          let year = this.state.year;
+    
+          for (let i = 0; i < 12; i++) {
+            let month = year.months[i]
+            for (let j = 0; j < month.days.length; j++) {
+              let day = month.days[j]
+              day.owner = users.find(user => user.weeks.includes(day.week))
+            }
+          }
+          this.setState({
+            users,
+            year
+          }, () => console.log(this.state.users))
+        })
+       })
+}
 
   render() {
 
     let user = this.state.users.map( (user, i) => {
       return <div key={i} className='userList'>
-
+          <div>{user.name}</div>
+          <div>{user.weeks.map( (week, i) => {
+            return <div key={i}>
+            <div>{week}</div>
+            <button onClick={ () => this.removeWeek(user.id, week) }>X</button>
+            </div>
+          })}</div> 
+          <button onClick={ () => this.removeUser(user.id) }>Remove User</button>
       </div>
     })
 
@@ -166,7 +216,7 @@ hoverWeek = hoveredWeek => {
             </div>
 
             <div className='admin-side-control'>
-              
+              {user}
             </div>
           </div>
 
