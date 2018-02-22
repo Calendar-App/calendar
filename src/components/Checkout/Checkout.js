@@ -123,7 +123,10 @@ class Checkout extends Component {
         this.props.selectWeek(week[0].week)
     }
 
-
+    // sorts the checkoutArr in order of week
+    sortArr(arr){
+        return arr.sort(function(a,b){return (a[0].week > b[0].week) ? 1 : ((b[0].week > a[0].week) ? -1 : 0)})
+    }
 
     render() {
         return (
@@ -132,9 +135,10 @@ class Checkout extends Component {
                     <h3 id='checkout-header'>Checkout <i className="fa fa-shopping-cart"></i></h3>
                     <span id='checkout-subheader'>Select Weeks, Fill Your Cart</span>
                     {this.state.checkoutWeeks.length
-                        ? this.state.checkoutWeeks.map((week, i) => (
+                        ? this.sortArr(this.state.checkoutWeeks).map((week, i) => (
                             <div onClick={() => this.toggleModalFromCheckout(week)}>
-                                {`${this.props.app.year.months[this.state.checkoutWeeks[i][0].month].fullMonth} ${this.state.checkoutWeeks[i][0].date} - ${this.props.app.year.months[this.state.checkoutWeeks[i][6].month].fullMonth} ${this.state.checkoutWeeks[i][6].date} (${this.props.app.year.year})`}
+                            {console.log(this.state.checkoutWeeks)}
+                                {`Week ${week[0].week} ${this.props.app.year.months[this.state.checkoutWeeks[i][0].month].fullMonth} ${this.state.checkoutWeeks[i][0].date} - ${this.props.app.year.months[this.state.checkoutWeeks[i][6].month].fullMonth} ${this.state.checkoutWeeks[i][6].date}`}
 
                                 {week.map(day => (
                                     day.holiday
@@ -146,7 +150,7 @@ class Checkout extends Component {
                         : null
 
                     }
-                    
+
                     <span id='total'>Total ${this.props.app.selectedWeeks.length * 150.00}</span>
                 </div>
             </div>
