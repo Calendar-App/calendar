@@ -47,9 +47,6 @@ class App extends Component {
       weekArray: [],
       // the week that is currently being hovered over by the mouse
       hoveredWeek: null,
-
-      admin: false,
-
       cancel: false
     }
   }
@@ -153,13 +150,13 @@ class App extends Component {
     let { selectedWeeks } = this.state
     // if the week is already selected, then we will remove the week from the selectedWeeks array
     if (selectedWeeks.includes(week)) {
-      selectedWeeks.splice(selectedWeeks.indexOf(week), 1)   
-      this.setState({cancel: false})     
+      selectedWeeks.splice(selectedWeeks.indexOf(week), 1)
+      this.setState({ cancel: false })
     }
     // if the week is not already selected, then we will add it to the selectedWeeks arary
     else {
       selectedWeeks.push(week)
-      this.setState({cancel: true})
+      this.setState({ cancel: true })
     }
     this.setState({
       selectedWeek: -1,
@@ -237,18 +234,10 @@ class App extends Component {
         />
 
         <div className='content'>
-          {
-            this.state.admin
-              ? (null
-                /* ADMIN */
-                // Josie's admin component here
-              )
-              : <Checkout
-                app={this.state}
-                selectWeek={this.selectWeek}
-              />
-          }
-
+          <Checkout
+            app={this.state}
+            selectWeek={this.selectWeek}
+          />
 
           <div className="calendar-container">
 

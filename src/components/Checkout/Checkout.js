@@ -13,20 +13,40 @@ class Checkout extends Component {
 
 
     componentWillReceiveProps(newProps) {
-        console.log('newProps', newProps)
-        console.log('test', this.state.weeks)
-        console.log('is equal', this.findEqual(newProps.app.weekArray, this.state.weeks.length === 0 ? this.state.weeks : this.state.weeks[this.state.weeks.length - 1]))
+        // console.log('newProps', newProps)
+        // console.log('test', this.state.weeks)
+        // console.log('is equal', this.findEqual(newProps.app.weekArray, this.state.weeks.length === 0 ? this.state.weeks : this.state.weeks[this.state.weeks.length - 1]))
 
         // checks if the current selected week is the same as the last week in states weeks array. if they are different then push the new week from props.
-        if (this.findEqual(newProps.app.weekArray, this.state.weeks.length === 0 ? this.state.weeks : this.state.weeks[this.state.weeks.length - 1])) {
-            null
-        }
-        else if (newProps.app.cancel){
-            this.state.weeks.push(newProps.app.weekArray)
-        }
 
-
+        if(!this.state.weeks.length){
+            if (this.findEqual(newProps.app.weekArray, this.state.weeks.length === 0 ? this.state.weeks : this.state.weeks[this.state.weeks.length - 1])) {
+                null
+            }
+            else if (newProps.app.cancel){
+                this.state.weeks.push(newProps.app.weekArray)
+            }
+        }
+        else{
+            let addToArr = true
+            for(let i = 0; i < this.state.weeks.length; i++){
+                console.log('in my loop boy',newProps.app.weekArray,'current week', this.state.weeks[i])
+                if(this.findEqual(newProps.app.weekArray, this.state.weeks[i])){
+                    addToArr = false
+                }
+            }
+            if(addToArr){
+                newProps.app.cancel 
+                ? this.state.weeks.push(newProps.app.weekArray)
+                : null
             
+            } 
+            
+        }
+
+
+
+
 
         this.setState({
             selectedWeeks: newProps.app.selectedWeeks
@@ -123,7 +143,7 @@ class Checkout extends Component {
                         ))
                         : null
                     }
-                    {this.state.weeks.length
+                    {/* {this.state.weeks.length
                         ? this.state.weeks.map((week, i) => (
                             week.map(day => (
                                 day.holiday
@@ -132,8 +152,7 @@ class Checkout extends Component {
                             ))
                         ))
                         : null
-
-                    }
+                    } */}
                     {this.state.weeks.length
                         ? this.state.weeks.map((week, i) => (
                             <div onClick={() => this.handleClick(week)}>
