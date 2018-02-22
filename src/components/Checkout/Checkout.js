@@ -133,11 +133,10 @@ class Checkout extends Component {
             <div className='checkout-container'>
                 <div className='checkout-tile'>
                     <h3 id='checkout-header'>Checkout <i className="fa fa-shopping-cart"></i></h3>
-                    <span id='checkout-subheader'>Select Weeks, Fill Your Cart</span>
+                    <span id='checkout-subheader'>{this.state.checkoutWeeks.length ? 'Click on week to remove' : 'YOUR CART IS EMPTY'}</span>
                     {this.state.checkoutWeeks.length
                         ? this.sortArr(this.state.checkoutWeeks).map((week, i) => (
-                            <div onClick={() => this.toggleModalFromCheckout(week)}>
-                            {console.log(this.state.checkoutWeeks)}
+                            <div className='checkout-week' onClick={() => this.toggleModalFromCheckout(week)}>
                                 {`Week ${week[0].week} ${this.props.app.year.months[this.state.checkoutWeeks[i][0].month].fullMonth} ${this.state.checkoutWeeks[i][0].date} - ${this.props.app.year.months[this.state.checkoutWeeks[i][6].month].fullMonth} ${this.state.checkoutWeeks[i][6].date}`}
 
                                 {week.map(day => (
@@ -147,11 +146,13 @@ class Checkout extends Component {
                                 ))}
                             </div>
                         ))
-                        : null
+                        : null //<div id='empty-cart'>Select Weeks to fill your cart</div>
 
                     }
-
+                    <div className='checkout-footer'>
                     <span id='total'>Total ${this.props.app.selectedWeeks.length * 150.00}</span>
+                    {this.state.checkoutWeeks.length ? <div id='checkout-btn'>Checkout</div> : null}
+                    </div>
                 </div>
             </div>
         )
