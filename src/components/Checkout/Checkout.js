@@ -7,55 +7,51 @@ class Checkout extends Component {
 
         this.state = {
             total: 0.00,
-            weeks: []
+            checkoutWeeks: []
         }
     }
 
-
+    // I used componentWillRecieveProps so that each time state changes I can get the updated state.
     componentWillReceiveProps(newProps) {
-        // console.log('newProps', newProps)
-        // console.log('test', this.state.weeks)
-        // console.log('is equal', this.findEqual(newProps.app.weekArray, this.state.weeks.length === 0 ? this.state.weeks : this.state.weeks[this.state.weeks.length - 1]))
-
-        // checks if the current selected week is the same as the last week in states weeks array. if they are different then push the new week from props.
-
-        if(!this.state.weeks.length){
-            if (this.findEqual(newProps.app.weekArray, this.state.weeks.length === 0 ? this.state.weeks : this.state.weeks[this.state.weeks.length - 1])) {
-                null
-            }
-            else if (newProps.app.cancel){
-                this.state.weeks.push(newProps.app.weekArray)
-            }
-        }
-        else{
-            let addToArr = true
-            for(let i = 0; i < this.state.weeks.length; i++){
-                console.log('in my loop boy',newProps.app.weekArray,'current week', this.state.weeks[i])
-                if(this.findEqual(newProps.app.weekArray, this.state.weeks[i])){
-                    addToArr = false
-                }
-            }
-            if(addToArr){
-                newProps.app.cancel 
-                ? this.state.weeks.push(newProps.app.weekArray)
-                : null
-            
-            } 
-            
-        }
-
-
-
-
+        //fires addNewWeek function
+        this.addNewWeek(newProps.app.weekArray, newProps.app.addToCheckout)
+        // fires removeWeek function
+        this.removeWeek(newProps.app.removeWeek)
 
         this.setState({
             selectedWeeks: newProps.app.selectedWeeks
         })
-
     }
 
-    // total copy paste to compare two arrays haha
-    // checks to compare if two arrays are equal.
+    // recieves the weeks number then checks if that week is in the weeks array, if so, remove it.
+    removeWeek = (weekNumber) => {
+        //because the default value of weekNumber is null we need to check if it has been changed to a number
+        if (weekNumber > 0 || weekNumber === 0) {
+            for (let i = 0; i < this.state.checkoutWeeks.length; i++) {
+                if (this.state.checkoutWeeks[i][0].week === weekNumber) {
+                    this.state.checkoutWeeks.splice(i, 1)
+                }
+            }
+        }
+        this.props.app.removeWeek = null
+    }
+
+    // adds the selected week to checkout if it is not found in this.state.checkoutWeeks array
+    addNewWeek = (weekArray, addToCheckout) => {
+        let addToArr = true
+        for (let i = 0; i < this.state.checkoutWeeks.length; i++) {
+            if (this.findEqual(weekArray, this.state.checkoutWeeks[i])) {
+                addToArr = false
+            }
+        }
+        if (addToArr) {
+            return addToCheckout
+                ? this.state.checkoutWeeks.push(weekArray)
+                : null
+        }
+    }
+
+    // checks to compare if two arrays are equal. (found online)
     findEqual = (value, other) => {
         var isEqual = function (value, other) {
 
@@ -123,42 +119,29 @@ class Checkout extends Component {
     }
 
 
-    handleClick = (week) => {
-        console.log(this.props.selectWeek)
-
+    toggleModalFromCheckout = (week) => {
+        this.props.selectWeek(week[0].week)
     }
 
+
+
     render() {
-        console.log('mah state', this.state)
         return (
             <div className='checkout-container'>
                 <div className='checkout-tile'>
                     <h3 id='checkout-header'>Checkout <i className="fa fa-shopping-cart"></i></h3>
                     <span id='checkout-subheader'>Select Weeks, Fill Your Cart</span>
-                    {this.props.selectedWeeks
-                        ? this.props.app.selectedWeeks.map((week, index) => (
-                            <div>
-                                <span>Week {week}</span>
+                    {this.state.checkoutWeeks.length
+                        ? this.state.checkoutWeeks.map((week, i) => (
+                            <div onClick={() => this.toggleModalFromCheckout(week)}>
+                                {`${this.props.app.year.months[this.state.checkoutWeeks[i][0].month].fullMonth} ${this.state.checkoutWeeks[i][0].date} - ${this.props.app.year.months[this.state.checkoutWeeks[i][6].month].fullMonth} ${this.state.checkoutWeeks[i][6].date} (${this.props.app.year.year})`}
+
+                                {week.map(day => (
+                                    day.holiday
+                                        ? <div >{day.holiday}</div>
+                                        : null
+                                ))}
                             </div>
-                        ))
-                        : null
-                    }
-                    {/* {this.state.weeks.length
-                        ? this.state.weeks.map((week, i) => (
-                            week.map(day => (
-                                day.holiday
-                                    ? <div>{day.holiday}</div>
-                                    : null
-                            ))
-                        ))
-                        : null
-                    } */}
-                    {this.state.weeks.length
-                        ? this.state.weeks.map((week, i) => (
-                            <div onClick={() => this.handleClick(week)}>
-                                {`${this.props.app.year.months[this.state.weeks[i][0].month].fullMonth} ${this.state.weeks[i][0].date} - ${this.props.app.year.months[this.state.weeks[i][6].month].fullMonth} ${this.state.weeks[i][6].date} (${this.props.app.year.year})`}
-                            </div>
-                            // <div>Hello</div>
                         ))
                         : null
 

@@ -47,7 +47,10 @@ class App extends Component {
       weekArray: [],
       // the week that is currently being hovered over by the mouse
       hoveredWeek: null,
-      cancel: false
+      // used to know if the week should be added to the checkout, is true only when modal 'select' is clicked.
+      addToCheckout: false,
+      // tells the checkout component to remove specified week
+      removeWeek: null
     }
   }
 
@@ -151,17 +154,16 @@ class App extends Component {
     // if the week is already selected, then we will remove the week from the selectedWeeks array
     if (selectedWeeks.includes(week)) {
       selectedWeeks.splice(selectedWeeks.indexOf(week), 1)
-      this.setState({ cancel: false })
+      this.setState({ addToCheckout: false, removeWeek: week })
     }
     // if the week is not already selected, then we will add it to the selectedWeeks arary
     else {
       selectedWeeks.push(week)
-      this.setState({ cancel: true })
+      this.setState({ addToCheckout: true, removeWeek: null })
     }
     this.setState({
       selectedWeek: -1,
       selectedWeeks,
-      // cancel: true
     })
   }
 
@@ -169,7 +171,6 @@ class App extends Component {
   // this is the function that is actually fired when a day/week is clicked on - this function passes the 'modalFunction' above into the 'toggleModal' function above it
   // takes in the number of the week that was clicked on
   selectWeek = week => {
-    console.log('AFLJFALJDF', week)
     // weekArray is an array of all the days inside the selected week - this is used so that we can display the beginning and ending dates of the selected week inside the modal
     let weekArray = this.state.year.months.reduce((arr, month) => {
       month.days.map(day => {
@@ -182,7 +183,7 @@ class App extends Component {
     this.setState({
       selectedWeek: week,
       weekArray,
-      cancel: false
+      addToCheckout: false
     })
     // toggleModal will display the modal and give it the function that should be fired when the modal's primary button is clicked
     this.toggleModal(() => this.modalFunction(bool, week, weekArray), bool)
