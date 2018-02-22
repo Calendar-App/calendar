@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
 .checkout-container{
     width: 20vw;
     display: flex;
@@ -5,35 +7,81 @@
     align-items: center;
     margin-top: 1rem;
     text-align: center;
+    font-family: Roboto;    
 
     .checkout-tile{
         position: relative;
-        min-height: 200px;
+        // min-height: 200px;
         border:  1px solid #3cb4ff;
         display: flex;
         flex-direction: column;
         background: white;
+        width: 95%;
         // position: fixed;
 
         #checkout-header{
             font-size: 2rem;
             padding: .5rem;
             background: #3cb4ff;
-            display: flex;
-            justify-content: space-around;
+            // display: flex;
+            // justify-content: space-around;
             color: white;
         }
 
         #checkout-subheader{
             background: rgba(60, 180, 255, 0.5);
             padding: .5rem;
+            color: rgb(20, 20, 20);
 
         }
 
-        #total{
-            position: absolute;
-            bottom: 0;
-            padding: .5rem;
+        .checkout-week{
+            margin: 1rem 0 0 0;
+            color: rgb(70, 70, 70);
+            border-bottom: 1px solid #3cb4ff;
+            padding-bottom: .2rem;
+        }
+
+        .checkout-week:hover{
+            cursor: pointer;
+        }
+
+        #empty-cart{
+            margin: 1rem 0;
+            color: rgb(70, 70, 70);
+        }
+
+        .checkout-footer{
+            display: flex;
+            justify-content: space-around;
+            // height: 40px;
+            margin-bottom: .5rem;
+
+            #total{
+                padding: .5rem;
+                color: rgb(70, 70, 70);
+                margin-top: .5rem;
+            }
+
+            #checkout-btn{
+                display: flex;
+                align-items: center;
+                padding: 0 .5rem;
+                margin-top: .5rem;
+                color: #464646;
+                background: #fff;
+                border: 1px solid #3cb4ff;
+                border-radius: 5px;
+                transition: .2s
+            }
+
+            #checkout-btn:hover{
+                cursor: pointer;
+                background: #3cb4ff;
+                border: 1px solid grey;
+                // background: rgba(60, 180, 255, 0.5);
+                color: white;      
+            }
         }
     }
 }
