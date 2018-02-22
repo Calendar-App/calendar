@@ -27,7 +27,12 @@ setTimeout(_ => {
 
 //endpoints//
 //GETS//
-app.get('/api/users', controller.getUsers)
+app.get('/api/users', controller.getUsers);
+
+
+//DELETES//
+app.delete('/api/deleteuser/:id', controller.deleteUser);
+app.delete('/api/removeweek/:id/:week', controller.removeWeek);
 
 
 const path = require('path')
