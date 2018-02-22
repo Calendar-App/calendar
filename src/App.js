@@ -156,7 +156,7 @@ class App extends Component {
       selectedWeeks.splice(selectedWeeks.indexOf(week), 1)
       this.setState({ addToCheckout: false, removeWeek: week })
     }
-    // if the week is not already selected, then we will add it to the selectedWeeks arary
+    // if the week is not already selected, then we will add it to the selectedWeeks array
     else {
       selectedWeeks.push(week)
       this.setState({ addToCheckout: true, removeWeek: null })

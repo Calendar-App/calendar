@@ -146,6 +146,7 @@ class Checkout extends Component {
                         : null
 
                     }
+                    
                     <span id='total'>Total ${this.props.app.selectedWeeks.length * 150.00}</span>
                 </div>
             </div>
