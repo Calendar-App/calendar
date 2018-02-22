@@ -1,21 +1,32 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto');
 
 .App{
-    font-family: Roboto;
+    width: 100vw;
     background: #EEEEEE;
+    overflow: hidden;
+    
+}
+.content{
+    display: flex;
+    
+}
+
+.calendar-container{
+    font-family: Roboto;
+    width: 80vw;
 }
 
 .calendar-header {
-   display: flex;
-   justify-content: space-between;
-   align-items: center;
-   color: white;
-   background: #304460;
-   padding: 1.5rem 2rem;
-   text-align: center;
-   font-size: 2.5rem;
-   color: white;
-   margin-bottom: 1rem
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    background: #304460;
+    padding: 1.5rem 2rem;
+    text-align: center;
+    font-size: 2.5rem;
+    color: white;
+    margin-bottom: 1rem
 }
 
 #next-year {
@@ -31,6 +42,7 @@ div.circle-picker{
     align-items: center !important;
     width: calc(100vw - 4rem) !important;
     margin: calc(1rem + 14px) 2rem 0 !important;
+    // width: 80vw !important;
 }
 
 #shadow {

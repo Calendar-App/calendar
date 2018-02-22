@@ -4,6 +4,7 @@ import './App.css'
 import axios from 'axios';
 
 import Year from './components/Year/Year';
+import Checkout from './components/Checkout/Checkout'
 import YearCreator from './year-creator';
 import { CirclePicker } from 'react-color';
 
@@ -45,7 +46,11 @@ class App extends Component {
       // an array of all the days in the 'selectedWeek' - it may be best to remove this property later to increase readability
       weekArray: [],
       // the week that is currently being hovered over by the mouse
-      hoveredWeek: null
+      hoveredWeek: null,
+      // used to know if the week should be added to the checkout, is true only when modal 'select' is clicked.
+      addToCheckout: false,
+      // tells the checkout component to remove specified week
+      removeWeek: null
     }
   }
 
@@ -94,7 +99,7 @@ class App extends Component {
   // fired when the arrows (top right & left corners) are clicked on to change the displayed year
   changeYear = num => {
     // num is either +1 or -1, to increment or decrement the year
-    console.log(this.state.year.year + num)
+    // console.log(this.state.year.year + num)
     // create a new year
     let year = new YearCreator(this.state.year.year + num)
     let { users } = this.state
@@ -106,7 +111,7 @@ class App extends Component {
         day.owner = users.find(user => user.weeks.includes(day.week))
       }
     }
-    console.log(year)
+    // console.log(year)
     this.setState({
       year
     })
@@ -125,14 +130,14 @@ class App extends Component {
   // takes in a callback and a boolean
   toggleModal = (cb, bool) => {
     // the callback function is fired inside the modal when the primary button is clicked
-    console.log(cb)
+    // console.log(cb)
     // the boolean references whether we are selecting or deselecting a week (whether or not it is already selected)
-    console.log(bool)
-    console.log(this.state)
+    // console.log(bool)
+    // console.log(this.state)
     this.setState({
       modal: !this.state.modal,
       modalFunction: cb.bind(this),
-      deselecting: bool
+      deselecting: bool,
     })
   }
 
@@ -140,23 +145,25 @@ class App extends Component {
   // this is the actual function that is passed into the toggleModal function above by the selectWeek function below - may also consolidate this for better readability
   modalFunction = (bool, week, weekArray) => {
     // the boolean references whether we are selecting or deselecting a week (whether or not it is already selected)
-    console.log(bool)
+    // console.log(bool)
     // week is the number of the week that was clicked on
-    console.log(week)
+    // console.log(week)
     // weekArray is an array of all the days inside the selected week - see initial state
-    console.log(weekArray)
+    // console.log(weekArray)
     let { selectedWeeks } = this.state
     // if the week is already selected, then we will remove the week from the selectedWeeks array
     if (selectedWeeks.includes(week)) {
       selectedWeeks.splice(selectedWeeks.indexOf(week), 1)
+      this.setState({ addToCheckout: false, removeWeek: week })
     }
-    // if the week is not already selected, then we will add it to the selectedWeeks arary
+    // if the week is not already selected, then we will add it to the selectedWeeks array
     else {
       selectedWeeks.push(week)
+      this.setState({ addToCheckout: true, removeWeek: null })
     }
     this.setState({
       selectedWeek: -1,
-      selectedWeeks
+      selectedWeeks,
     })
   }
 
@@ -175,7 +182,8 @@ class App extends Component {
     let bool = this.state.selectedWeeks.includes(week)
     this.setState({
       selectedWeek: week,
-      weekArray
+      weekArray,
+      addToCheckout: false
     })
     // toggleModal will display the modal and give it the function that should be fired when the modal's primary button is clicked
     this.toggleModal(() => this.modalFunction(bool, week, weekArray), bool)
@@ -199,12 +207,12 @@ class App extends Component {
 
 
   render() {
-    console.log(this.state)
+    // console.log(this.state)
     return (
       <div className="App">
 
-        {/* HEADER */}
 
+        {/* HEADER */}
         <div className='calendar-header'>
           {/* PREVIOUS YEAR BUTTON */}
           <div id='prev-year' onClick={() => this.changeYear(-1)}>
@@ -219,7 +227,6 @@ class App extends Component {
         </div>
 
         {/* COLOR PICKER */}
-
         <CirclePicker
           onChangeComplete={this.handleColorChange}
           colors={this.state.colors}
@@ -227,44 +234,54 @@ class App extends Component {
           circleSpacing={14} // space between circles
         />
 
-        {/* YEAR */}
+        <div className='content'>
+          <Checkout
+            app={this.state}
+            selectWeek={this.selectWeek}
+          />
 
-        <Year
-          key={this.state.year.year}
-          year={this.state.year}
-          selectWeek={this.selectWeek}
-          selectedWeek={this.state.selectedWeek}
-          selectedWeeks={this.state.selectedWeeks}
-          hoverWeek={this.hoverWeek}
-          hoveredWeek={this.state.hoveredWeek}
-          color={this.state.color}
-          currentUser={this.state.currentUser}
-        />
+          <div className="calendar-container">
 
-        {/* MODAL */}
+            {/* YEAR */}
 
-        {
-          this.state.modal ?
-            // SHADOW - to cover background - onClick turns modal off
-            <div id="shadow" onClick={() => this.toggleModal(() => { })} >
-              {/* MODAL */}
-              <div id="modal" onClick={e => e.stopPropagation()} >
-                {/* HEADER */}
-                <div id="modal-header">{this.state.deselecting ? "Deselect" : "Select"} Week {this.state.selectedWeek}?</div>
-                {/* SUBHEADER */}
-                <div id="modal-subheader">{`${this.state.year.months[this.state.weekArray[0].month].fullMonth} ${this.state.weekArray[0].date} - ${this.state.year.months[this.state.weekArray[6].month].fullMonth} ${this.state.weekArray[6].date} (${this.state.year.year})`}</div>
-                {/* BUTTONS */}
-                <div id='button-container'>
-                  {/* CANCEL BUTTON */}
-                  <button id='cancel' onClick={() => this.toggleModal(() => { })} >Cancel</button>
-                  {/* PRIMARY BUTTON */}
-                  <button id='select' onClick={() => { this.state.modalFunction(); this.toggleModal(() => { }) }} >{this.state.deselecting ? "Deselect" : "Select"}</button>
+            <Year
+              key={this.state.year.year}
+              year={this.state.year}
+              selectWeek={this.selectWeek}
+              selectedWeek={this.state.selectedWeek}
+              selectedWeeks={this.state.selectedWeeks}
+              hoverWeek={this.hoverWeek}
+              hoveredWeek={this.state.hoveredWeek}
+              color={this.state.color}
+              currentUser={this.state.currentUser}
+            />
+
+            {/* MODAL */}
+
+            {
+              this.state.modal ?
+                // SHADOW - to cover background - onClick turns modal off
+                <div id="shadow" onClick={() => this.toggleModal(() => { })} >
+                  {/* MODAL */}
+                  <div id="modal" onClick={e => e.stopPropagation()} >
+                    {/* HEADER */}
+                    <div id="modal-header">{this.state.deselecting ? "Deselect" : "Select"} Week {this.state.selectedWeek}?</div>
+                    {/* SUBHEADER */}
+                    <div id="modal-subheader">{`${this.state.year.months[this.state.weekArray[0].month].fullMonth} ${this.state.weekArray[0].date} - ${this.state.year.months[this.state.weekArray[6].month].fullMonth} ${this.state.weekArray[6].date} (${this.state.year.year})`}</div>
+                    {/* BUTTONS */}
+                    <div id='button-container'>
+                      {/* CANCEL BUTTON */}
+                      <button id='cancel' onClick={() => this.toggleModal(() => { })} >Cancel</button>
+                      {/* PRIMARY BUTTON */}
+                      <button id='select' onClick={() => { this.state.modalFunction(); this.toggleModal(() => { }) }} >{this.state.deselecting ? "Deselect" : "Select"}</button>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-            :
-            null
-        }
+                :
+                null
+            }
+          </div>
+        </div>
       </div>
     );
   }
