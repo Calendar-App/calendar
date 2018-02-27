@@ -1,19 +1,22 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto');
 
-.App{
+.App {
     width: 100vw;
     background: #EEEEEE;
     overflow: hidden;
-    
+    font-family: Roboto;
 }
-.content{
+.content {
     display: flex;
     
 }
 
-.calendar-container{
-    font-family: Roboto;
+.calendar-container {
     width: 80vw;
+}
+
+.Month, .checkout-tile {
+    box-shadow: 2.5px 5px 10px rgba(0,0,0,0.125);
 }
 
 .calendar-header {
