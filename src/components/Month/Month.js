@@ -38,7 +38,12 @@ class Month extends Component {
                         emptyDays.length ? 
                             emptyDays.map((item, i) => {
                                 return (
-                                    <div key={`${month.year}${month.month}${i}000`} className="day" onMouseEnter={() => this.props.hoverWeek(-1)} />
+                                    <div
+                                        key={`${month.year}${month.month}${i}000`}
+                                        className="day"
+                                        onMouseEnter={() => this.props.hoverWeek(-1)}
+                                        onClick={() => this.props.selectWeek(month.weeks[0].week)}
+                                    />
                                 )
                             })
                             :
@@ -71,7 +76,7 @@ class Month extends Component {
                                         key={`${month.year}${month.month}${i}000000`}
                                         className="day"
                                         onMouseEnter={() => this.props.hoverWeek(month.weeks[month.weeks.length - 1].week)}
-                                        onClick={() => this.props.selectWeek()}
+                                        onClick={() => this.props.selectWeek(month.weeks[month.weeks.length -1].week)}
                                     />
                                 )
                             })

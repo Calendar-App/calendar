@@ -271,7 +271,7 @@ class App extends Component {
                     {/* BUTTONS */}
                     <div id='button-container'>
                       {/* CANCEL BUTTON */}
-                      <button id='cancel' onClick={() => this.toggleModal(() => { })} >Cancel</button>
+                      <button id='cancel' onClick={() => { this.setState({ selectedWeek: -1 }); this.toggleModal(() => { })}} >Cancel</button>
                       {/* PRIMARY BUTTON */}
                       <button id='select' onClick={() => { this.state.modalFunction(); this.toggleModal(() => { }) }} >{this.state.deselecting ? "Deselect" : "Select"}</button>
                     </div>
