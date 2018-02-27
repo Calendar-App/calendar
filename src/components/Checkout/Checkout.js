@@ -137,7 +137,7 @@ class Checkout extends Component {
                     {this.state.checkoutWeeks.length
                         ? this.sortArr(this.state.checkoutWeeks).map((week, i) => (
                             <div className='checkout-week' onClick={() => this.toggleModalFromCheckout(week)}>
-                                {`Week ${week[0].week} ${this.props.app.year.months[this.state.checkoutWeeks[i][0].month].fullMonth} ${this.state.checkoutWeeks[i][0].date} - ${this.props.app.year.months[this.state.checkoutWeeks[i][6].month].fullMonth} ${this.state.checkoutWeeks[i][6].date}`}
+                                {`Week ${week[0].week} ${this.props.app.year.months[this.state.checkoutWeeks[i][0].month].fullMonth} ${this.state.checkoutWeeks[i][0].date} - ${this.props.app.year.months[this.state.checkoutWeeks[i][this.state.checkoutWeeks[i].length - 1].month].fullMonth} ${this.state.checkoutWeeks[i][this.state.checkoutWeeks[i].length - 1].date}`}
 
                                 {week.map(day => (
                                     day.holiday

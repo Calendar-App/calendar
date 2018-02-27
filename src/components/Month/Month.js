@@ -41,7 +41,7 @@ class Month extends Component {
                                     <div
                                         key={`${month.year}${month.month}${i}000`}
                                         className="day"
-                                        onMouseEnter={() => this.props.hoverWeek(-1)}
+                                        onMouseEnter={() => this.props.hoverWeek(month.weeks[0].week)}
                                         onClick={() => this.props.selectWeek(month.weeks[0].week)}
                                     />
                                 )

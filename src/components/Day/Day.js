@@ -5,26 +5,20 @@ class Day extends Component {
     constructor(props) {
         super(props)
         this.availability = this.availability.bind(this);
+        this.handleClick = this.handleClick.bind(this);
+        this.handleHover = this.handleHover.bind(this);
     }
 
-
-    // if user is not admin
-    // unavailable days are gray
-    // selected days are the selected color
-    // hover days are the selected color with opacity 50%
-    // 
-    // holidays are always slightly darker
-    // unavailable days are always unselectable
-    // 
-    // if user is admin ... 
-
-    handleClick = () => {
+    handleClick() {
         console.log(this.props.day)
         if (this.props.day.owner) return
         else this.props.selectWeek(this.props.day.week)
     }
 
-
+    handleHover() {
+        let { day, hoverWeek } = this.props
+        hoverWeek(day.week)
+    }
 
     availability() {
         return (!this.props.day.owner) ?
@@ -78,7 +72,7 @@ class Day extends Component {
             <div
                 style={style}
                 className={day.week === this.props.hoveredWeek ? 'day hover' : 'day'}
-                onMouseEnter={() => this.props.hoverWeek(day.week)}
+                onMouseEnter={this.handleHover}
                 onClick={this.handleClick} 
                 >
                 {/* DAY */}

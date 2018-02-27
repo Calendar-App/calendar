@@ -178,6 +178,8 @@ class App extends Component {
       })
       return arr
     }, [])
+    console.log(week)
+    console.log(weekArray)
     // the boolean references whether or not the 
     let bool = this.state.selectedWeeks.includes(week)
     this.setState({
@@ -267,7 +269,7 @@ class App extends Component {
                     {/* HEADER */}
                     <div id="modal-header">{this.state.deselecting ? "Deselect" : "Select"} Week {this.state.selectedWeek}?</div>
                     {/* SUBHEADER */}
-                    <div id="modal-subheader">{`${this.state.year.months[this.state.weekArray[0].month].fullMonth} ${this.state.weekArray[0].date} - ${this.state.year.months[this.state.weekArray[6].month].fullMonth} ${this.state.weekArray[6].date} (${this.state.year.year})`}</div>
+                    <div id="modal-subheader">{`${this.state.year.months[this.state.weekArray[0].month].fullMonth} ${this.state.weekArray[0].date} - ${this.state.year.months[this.state.weekArray[this.state.weekArray.length - 1].month].fullMonth} ${this.state.weekArray[this.state.weekArray.length - 1].date} (${this.state.year.year})`}</div>
                     {/* BUTTONS */}
                     <div id='button-container'>
                       {/* CANCEL BUTTON */}
