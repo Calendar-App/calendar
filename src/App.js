@@ -211,7 +211,7 @@ class App extends Component {
     render() {
         // console.log(this.state)
         return (
-            <div className="App" onClick={() => this.toggleModa(() => { }, false)} >
+            <div className="App" onClick={() => this.selectWeek(-1)} >
 
 
                 {/* HEADER */}
