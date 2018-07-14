@@ -136,7 +136,7 @@ class Month {
 
 class Year {
     constructor(year) {
-        this.year = year
+        this.year = year || new Date(Date.now()).getFullYear()
         this.firstDay = new Date(year, 0, 1)
         this.firstDay = this.firstDay.getDay()
         let week = {
