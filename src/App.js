@@ -192,6 +192,14 @@ class App extends Component {
     }
 
 
+    toggleModalOff = () => {
+        this.setState({
+            modal: false,
+            selectedWeek: -1
+        })
+    }
+
+
     // fires when the user selects a different color
     handleColorChange = (color, event) => {
         // color.hex is created by the CirclePicker library
@@ -211,7 +219,7 @@ class App extends Component {
     render() {
         // console.log(this.state)
         return (
-            <div className="App" onClick={() => this.selectWeek(-1)} >
+            <div className="App" onClick={this.toggleModalOff} >
 
 
                 {/* HEADER */}
@@ -270,7 +278,31 @@ class App extends Component {
                                         {/* HEADER */}
                                         <div id="modal-header">{this.state.deselecting ? "Deselect" : "Select"} Week {this.state.selectedWeek}?</div>
                                         {/* SUBHEADER */}
-                                        <div id="modal-subheader">{`${this.state.year.months[this.state.weekArray[0].month].fullMonth} ${this.state.weekArray[0].date} - ${this.state.year.months[this.state.weekArray[this.state.weekArray.length - 1].month].fullMonth} ${this.state.weekArray[this.state.weekArray.length - 1].date} (${this.state.year.year})`}</div>
+                                        <div id="modal-subheader">
+                                            {`${
+                                                (
+                                                    this.state.year.months[(
+                                                        this.state.weekArray[0] || {}
+                                                    ).month] || {}
+                                                ).fullMonth
+                                                } ${
+                                                (
+                                                    this.state.weekArray[0] || {}
+                                                ).date
+                                                } - ${
+                                                (
+                                                    this.state.year.months[(
+                                                        this.state.weekArray[this.state.weekArray.length - 1] || {}
+                                                    ).month] || {}
+                                                ).fullMonth
+                                                } ${
+                                                (
+                                                    this.state.weekArray[this.state.weekArray.length - 1] || {}
+                                                ).date
+                                                } (${
+                                                this.state.year.year
+                                                })`}
+                                        </div>
                                         {/* BUTTONS */}
                                         <div id='button-container'>
                                             {/* CANCEL BUTTON */}
