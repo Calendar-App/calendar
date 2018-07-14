@@ -61,4 +61,4 @@ If I were to recreate this project, I would recognize the issue of weeks, and wo
 
 ## Screenshots
 
-<img src="https://github.com/Tommydreamer57/calendar/blob/master/screenshots/Calendar%20Screenshot.PNG?raw=true">
+<img src="https://github.com/Calendar-App/calendar/blob/master/screenshots/Calendar%20Screenshot.PNG?raw=true">
