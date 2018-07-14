@@ -9,7 +9,8 @@ class Day extends Component {
         this.handleHover = this.handleHover.bind(this);
     }
 
-    handleClick() {
+    handleClick(event) {
+        event.stopPropagation()
         console.log(this.props.day)
         if (this.props.day.owner) return
         else this.props.selectWeek(this.props.day.week)
