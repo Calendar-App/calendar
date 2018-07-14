@@ -237,12 +237,14 @@ class App extends Component {
         />
 
         <div className='content'>
-          <Checkout
+
+          {/* <Checkout
             app={this.state}
             selectWeek={this.selectWeek}
-          />
+          /> */}
 
-          <div className="calendar-container">
+
+	  <div className="calendar-container">
 
             {/* YEAR */}
 
