@@ -3,7 +3,7 @@
 
 <br>
 
-I built this calendar app together with two other DevMountain grads from my class for a startup in Arizona. The company deals with timeshares to a property and needed a way for customers to select weeks of the year. 
+We built this calendar app for a startup in Arizona. The company deals with timeshares to a property and needed a way for customers to select weeks of the year. 
 
 <br>
 
@@ -14,12 +14,13 @@ Live at >>> [https://calendar.thomaslowry.me/](https://calendar.thomaslowry.me/)
 ## Technologies
 
  - React
+ - Vanilla JavaScript
 
 <br>
 
 ## Year-Creator Class
 
-In order to display an entire year, I built a JavaScript class that takes in a year and creates an object with all the months and days of that year, including US national holidays.
+In order to display an entire year, We built a JavaScript class that takes in a year and returns an object with all the months and days of that year, including US national holidays.
 
 ### Year
 
@@ -49,13 +50,13 @@ Since all of state has to be tracked in `App.js`, this causes React to rerender 
 
 We initially had arrow functions inside of our JSX in multiple components. This is not much of an issue in `App.js` or even `Year.js` or `Month.js` because there is only one `App`, one `Year`, and twelve `Month`s. However, in `Day.js`, this presented a huge issue because there were two arrow functions inside the JSX of the functional `Day` component, meaning that each time the user hovers over a different day, the app rerenders, and 700+ arrow functions are recreated and saved in memory, making the hover effect extremely slow.
 
-This was the first time that I learned that class components in React are not only used for tracking state, but also for saving memory and time by using prototypes.
+This was the first time that we learned that class components in React are not only used for tracking state, but also for saving memory and time by using prototypes.
 
-I converted the Day component into a stateless class component with methods that will fire on mouseover and mouseleave to tell the app which week is being hovered. Now instead of recreating 700+ functions every time the mouse moves, there are two functions saved on the prototype of the `Day` class that are accessed by each instance of the class. Now the hover effect is fairly quick.
+We converted the Day component into a stateless class component with methods that will fire on mouseover and mouseleave to tell the app which week is being hovered. Now instead of recreating 700+ functions every time the mouse moves, there are two functions saved on the prototype of the `Day` class that are accessed by each instance of the class. Now the hover effect is fairly quick.
 
 ### A Better Way - Refs, Context or Redux
 
-If I were to recreate this project, I would recognize the issue of weeks, and would probably use React refs to directly access each day of the week that is hovered, instead of resetting the state of the entire application just for a hover effect. Another way would be to use context or redux so that only the months and days that are hovered over will rerender. Context probably would have been the best solution.
+If we were to recreate this project, I would recognize the issue of weeks, and would probably use React refs to directly access each day of the week that is hovered, instead of resetting the state of the entire application just for a hover effect. Another way would be to use context or redux so that only the months and days that are hovered over will rerender.
 
 <br>
 
