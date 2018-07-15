@@ -56,7 +56,7 @@ We converted the Day component into a stateless class component with methods tha
 
 ### A Better Way - Refs, Context or Redux
 
-If we were to recreate this project, I would recognize the issue of weeks, and would probably use React refs to directly access each day of the week that is hovered, instead of resetting the state of the entire application just for a hover effect. Another way would be to use context or redux so that only the months and days that are hovered over will rerender.
+If we were to recreate this project, we would recognize the issue of weeks, and would probably use React refs to directly access each day of the week that is hovered, instead of resetting the state of the entire application just for a hover effect. Another way would be to use context or redux so that only the months and days that are hovered over will rerender.
 
 <br>
 
